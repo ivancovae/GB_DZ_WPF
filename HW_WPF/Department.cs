@@ -22,39 +22,59 @@ namespace HW_WPF
         /// </summary>
         public string Name => _name.ToString();
 
-        private Employee _director;
-        /// <summary>
-        /// Свойство директора департамента
-        /// </summary>
-        public Employee Director => _director;
-
         private List<Employee> _employees;
 
         /// <summary>
         /// Конструктор создания карточки департамента
         /// </summary>
-        /// <exception cref="ArgumentException">Исключение некорретного ввода Наименования, Директора</exception>
+        /// <exception cref="ArgumentException">Исключение некорретного ввода Наименования</exception>
         /// <param name="name">Наименование</param>
-        /// <param name="director">Директор</param>
-        public Department(string name, Employee director)
+        public Department(string name)
         {
             if (name == null || name == "")
                 throw new ArgumentException($"Имя не должно быть пустым", "name");
             _name = name;
-            if (director == null)
-                throw new ArgumentException($"Для департамента должен быть задан директор", "director");
-            _director = director;
+            
             _employees = new List<Employee>();
-            _employees.Add(director);
             _guid = Guid.NewGuid();
         }
 
+        /// <summary>
+        /// Добавление нового сотрудника
+        /// </summary>
+        /// <param name="employee">Сотрудник</param>
+        /// <returns>Успешность добавления true при успешном добавление, false при уже существующем сотруднике</returns>
         public bool AddNewEmployee(Employee employee)
         {
-            if ((_employees.IndexOf(employee) != -1) || !employee.ChangeDepartment(this))
+            if (CheckEmployee(employee))
                 return false;
             _employees.Add(employee);
+            employee.ChangeDepartment(this);
             return true;
+        }
+
+        /// <summary>
+        /// Удаление сотрудника из департамента
+        /// </summary>
+        /// <param name="employee">Сотрудник</param>
+        /// <returns>Успешность удаления true при успешном удаление, false при не возможности удаления сотрудника</returns>
+        public bool RemoveEmployee(Employee employee)
+        {
+            if (!CheckEmployee(employee))
+                return false;
+            _employees.Remove(employee);
+            employee.ChangeDepartment(null);
+            return true;
+        }
+
+        /// <summary>
+        /// Проверка наличия сотрудника в департаменте
+        /// </summary>
+        /// <param name="employee">Сотрудник</param>
+        /// <returns>Результат наличия сотрудника</returns>
+        public bool CheckEmployee(Employee employee)
+        {
+            return _employees.IndexOf(employee) != -1;
         }
     }
 }

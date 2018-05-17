@@ -26,7 +26,8 @@ namespace HW_WPF
         public string SurName => _surname.ToString();
         private WeakReference _department;
         /// <summary>
-        /// Свойство департамента, в котором работает сотрудник
+        /// Свойство департамента, в котором работает сотрудник,
+        /// сотрудник может работать только в одном департаменте
         /// </summary>
         public Department Department => (_department.Target as Department);
 
@@ -55,12 +56,15 @@ namespace HW_WPF
         /// </summary>
         /// <param name="newDepartment">Новый департамент</param>
         /// <returns></returns>
-        public bool ChangeDepartment(Department newDepartment)
+        public void ChangeDepartment(Department newDepartment)
         {
-            if (newDepartment == null)
-                return false;
+            if (Department == newDepartment)
+                return;
+            if (Department != null && Department.CheckEmployee(this))
+                Department.RemoveEmployee(this);
             _department = new WeakReference(newDepartment, false);
-            return true;
+            if (Department != null && !Department.CheckEmployee(this))
+                Department.AddNewEmployee(this);
         }
     }
 }

@@ -22,6 +22,23 @@ namespace HW_WPF
         public MainWindow()
         {
             InitializeComponent();
+            
+            Employee directorCompany = new Employee("Иван", "Иванов");
+            Company company = new Company("Рога и Копыта");
+
+            Employee directorDepartment = new Employee("Антон", "Иванов");
+            company.AddNewDepartment("Програмных технологий");
+            company.AddNewDepartment("Сетевых технологий");
+
+            var departments = company.Departments;
+
+            Employee employee00 = new Employee("Константин", "Иванов");
+            departments[0].AddNewEmployee(employee00);
+
+            Employee employee01 = new Employee("Сергей", "Иванов");
+            departments[0].AddNewEmployee(employee01);
+
+            employee00.ChangeDepartment(departments[1]);
         }
     }
 }
