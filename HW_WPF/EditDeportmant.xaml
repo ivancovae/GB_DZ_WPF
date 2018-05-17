@@ -1,0 +1,29 @@
+﻿<Window x:Class="HW_WPF.EditDeportmant"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:HW_WPF"
+        mc:Ignorable="d"
+        Title="EditDeportmant" 
+        Height="360" Width="430"
+        MinHeight="360" MinWidth="430"
+        MaxHeight="600" MaxWidth="430">
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="40"/>
+            <RowDefinition/>
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition/>
+            <ColumnDefinition/>
+        </Grid.ColumnDefinitions>
+        <Label x:Name="labelTitleEmployees" Grid.Column="0" Grid.Row="0" Content="Сотрудники" Margin="5" HorizontalContentAlignment="Center"/>
+        <ListBox x:Name="listBoxEmployees"  Grid.Column="0" Grid.Row="1" Margin="5"/>
+        <StackPanel Grid.Column="1" Grid.Row="2" Orientation="Vertical">
+            <Button x:Name="btnAddDepartment" Content="Добавить" VerticalAlignment="Center" HorizontalAlignment="Stretch" Margin="5" Click="btnAddDepartment_Click"/>
+            <Button x:Name="btnRemoveDepartment" Content="Удалить" VerticalAlignment="Center" HorizontalAlignment="Stretch" Margin="5" Click="btnRemoveDepartment_Click"/>
+            <Button x:Name="btnEditDepartment" Content="Редактировать" VerticalAlignment="Center" HorizontalAlignment="Stretch" Margin="5" Click="btnEditDepartment_Click"/>
+        </StackPanel>
+    </Grid>
+</Window>

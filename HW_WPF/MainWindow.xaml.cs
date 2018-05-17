@@ -40,5 +40,20 @@ namespace HW_WPF
 
             employee00.ChangeDepartment(departments[1]);
         }
+
+        private void btnAddDepartment_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
+
+        private void btnRemoveDepartment_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
+
+        private void btnEditDepartment_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
     }
 }

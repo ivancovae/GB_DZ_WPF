@@ -1,0 +1,35 @@
+﻿<Window x:Class="HW_WPF.EditEmpoyee"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:HW_WPF"
+        mc:Ignorable="d"
+        Title="EditEmpoyee" 
+        Height="360" Width="430"
+        MinHeight="360" MinWidth="430"
+        MaxHeight="600" MaxWidth="430">
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="40"/>
+            <RowDefinition Height="40"/>
+            <RowDefinition Height="40"/>
+            <RowDefinition Height="40"/>
+            <RowDefinition Height="40"/>
+            <RowDefinition/>
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition/>
+            <ColumnDefinition/>
+        </Grid.ColumnDefinitions>
+        <Label x:Name="labelTitleEmployee" Grid.Row="0" Grid.Column="0" Content="Сотрудник" Margin="5" HorizontalContentAlignment="Center"/>
+        <Label x:Name="labelEmployeeName" Grid.Row="1" Grid.Column="0" Content="Имя" Margin="5" HorizontalContentAlignment="Center"/>
+        <TextBox x:Name="textBoxEmployeeName" Grid.Row="1" Grid.Column="1" Margin="5" HorizontalContentAlignment="Center"/>
+        <Label x:Name="labelEmployeeSurname" Grid.Row="2" Grid.Column="0" Content="Фамилия" Margin="5" HorizontalContentAlignment="Center"/>
+        <TextBox x:Name="textBoxEmployeeSurname" Grid.Row="2" Grid.Column="1" Margin="5" HorizontalContentAlignment="Center"/>
+        <Label x:Name="labelEmployeeDepartment" Grid.Row="3" Grid.Column="0" Content="Департамент" Margin="5" HorizontalContentAlignment="Center"/>
+        <ComboBox x:Name="textBoxEmployeeDepartment" Grid.Row="3" Grid.Column="1" Margin="5" HorizontalContentAlignment="Center"/>
+        <Button x:Name="btnSaveEmployee" Grid.Row="4" Grid.Column="0" Content="Сохранить" Margin="5" HorizontalContentAlignment="Center" Click="btnSaveEmployee_Click"></Button>
+        <Button x:Name="btnCancelEmployee" Grid.Row="4" Grid.Column="1" Content="Отменить" Margin="5" HorizontalContentAlignment="Center" Click="btnCancelEmployee_Click"></Button>
+    </Grid>
+</Window>
