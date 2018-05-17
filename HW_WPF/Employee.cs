@@ -33,11 +33,10 @@ namespace HW_WPF
         /// <summary>
         /// Конструктор создания карточки сотрудника
         /// </summary>
-        /// <exception cref="ArgumentException">Исключение некорретного ввода Имени, Фамилии, Департамента</exception>
+        /// <exception cref="ArgumentException">Исключение некорретного ввода Имени, Фамилии</exception>
         /// <param name="name">Имя</param>
         /// <param name="surname">Фамилия</param>
-        /// <param name="department">Департамент</param>
-        public Employee(string name, string surname, Department department)
+        public Employee(string name, string surname)
         {
             if (surname == null || surname == "")
                 throw new ArgumentException($"Фамилия не должна быть пустой", "surname");
@@ -46,10 +45,22 @@ namespace HW_WPF
             if (name == null || name == "")
                 throw new ArgumentException($"Имя не должно быть пустым", "name");
             _name = name;
-            if (department == null)
-                throw new ArgumentException($"Сотрудник должен быть в каком-то Департаменте", "department");
-            _department = new WeakReference(department, false);
+            
+            _department = new WeakReference(null, false);
             _guid = Guid.NewGuid();
+        }
+
+        /// <summary>
+        /// Изменение департамента сотрудника
+        /// </summary>
+        /// <param name="newDepartment">Новый департамент</param>
+        /// <returns></returns>
+        public bool ChangeDepartment(Department newDepartment)
+        {
+            if (newDepartment == null)
+                return false;
+            _department = new WeakReference(newDepartment, false);
+            return true;
         }
     }
 }

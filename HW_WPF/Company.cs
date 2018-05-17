@@ -6,54 +6,55 @@ using System.Text;
 namespace HW_WPF
 {
     /// <summary>
-    /// Класс карточки департамента
+    /// Класс карточки компании
     /// </summary>
-    class Department
+    class Company
     {
         private Guid _guid;
         /// <summary>
-        /// Свойство уникального идентификатора департамента
+        /// Свойство уникального идентификатора компании
         /// </summary>
         public string ID => _guid.ToString();
 
         private string _name;
         /// <summary>
-        /// Свойство наименования департамента
+        /// Свойство наименования компании
         /// </summary>
         public string Name => _name.ToString();
 
         private Employee _director;
         /// <summary>
-        /// Свойство директора департамента
+        /// Свойство директора компании
         /// </summary>
         public Employee Director => _director;
 
-        private List<Employee> _employees;
+        private List<Department> _departments;
+        
 
         /// <summary>
-        /// Конструктор создания карточки департамента
+        /// Конструктор создания карточки компании
         /// </summary>
         /// <exception cref="ArgumentException">Исключение некорретного ввода Наименования, Директора</exception>
         /// <param name="name">Наименование</param>
         /// <param name="director">Директор</param>
-        public Department(string name, Employee director)
+        public Company(string name, Employee director)
         {
             if (name == null || name == "")
                 throw new ArgumentException($"Имя не должно быть пустым", "name");
             _name = name;
             if (director == null)
-                throw new ArgumentException($"Для департамента должен быть задан директор", "director");
+                throw new ArgumentException($"Для компании должен быть задан директор", "director");
             _director = director;
-            _employees = new List<Employee>();
-            _employees.Add(director);
+            _departments = new List<Department>();
             _guid = Guid.NewGuid();
         }
 
-        public bool AddNewEmployee(Employee employee)
+        public bool AddNewDepartment(string name, Employee director)
         {
-            if ((_employees.IndexOf(employee) != -1) || !employee.ChangeDepartment(this))
+            var department = new Department(name, director);
+            if (_departments.IndexOf(department) != -1)
                 return false;
-            _employees.Add(employee);
+            _departments.Add(department);
             return true;
         }
     }
