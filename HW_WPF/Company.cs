@@ -29,6 +29,8 @@ namespace HW_WPF
         /// </summary>
         public Department[] Departments => _departments.ToArray();
 
+        public Company() : this("Без названия") {}
+
         /// <summary>
         /// Конструктор создания карточки компании
         /// </summary>
@@ -58,6 +60,14 @@ namespace HW_WPF
                 return false;
             _departments.Add(department);
             return true;
+        }
+        /// <summary>
+        /// Переименование фирмы
+        /// </summary>
+        /// <param name="newName">Новое имя</param>
+        public void RenameCompany(string newName)
+        {
+            _name = newName;
         }
     }
 }
