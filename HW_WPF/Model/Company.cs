@@ -27,7 +27,7 @@ namespace HW_WPF
         /// <summary>
         /// Список департаментов компании
         /// </summary>
-        public string[] Departments => _departments.Select(e=>e.Name).ToArray();
+        public List<string> Departments => _departments.Select(e=>e.Name).ToList();
 
 
         /// <summary>
@@ -60,7 +60,7 @@ namespace HW_WPF
         public bool AddNewDepartment(string name)
         {
             var department = new Department(name);
-            if (_departments.IndexOf(department) != -1)
+            if (Departments.IndexOf(name) != -1)
                 return false;
             _departments.Add(department);
             return true;
@@ -72,8 +72,7 @@ namespace HW_WPF
         /// <returns>Успешность добавления true при успешном добавление, false при уже существующем департаменте</returns>
         public bool AddNewDepartment(Department department)
         {
-            var list = _departments.Select(e => e.Name).ToList();
-            if (list.IndexOf(department.Name) != -1)
+            if (Departments.IndexOf(department.Name) != -1)
                 return false;
             _departments.Add(department);
             return true;
@@ -85,6 +84,47 @@ namespace HW_WPF
         public void RenameCompany(string newName)
         {
             _name = newName;
+        }
+        /// <summary>
+        /// Удаление департамента
+        /// </summary>
+        /// <param name="department">Департамент</param>
+        /// <returns>Успешность удаления true при успешном удаление, false при не существующем департаменте</returns>
+        public bool RemoveDepartment(Department department)
+        {
+            if (Departments.IndexOf(department.Name) == -1)
+                return false;
+            _departments.Remove(department);
+            return true;
+        }
+        /// <summary>
+        /// Удаление департамента
+        /// </summary>
+        /// <param name="department">Имя департамент</param>
+        /// <returns>Успешность удаления true при успешном удаление, false при не существующем департаменте</returns>
+        public bool RemoveDepartment(string department)
+        {
+            var list = _departments.Select(e => e)
+                                   .Where(e => e.Name == department).ToList();
+            if (list.Count == 0)
+                return false;
+
+            _departments.Remove(list.First());
+            return true;
+        }
+        /// <summary>
+        /// Получить объект департамента
+        /// </summary>
+        /// <param name="name">Имя департамента</param>
+        /// <returns>Объект департамента</returns>
+        public Department GetDepartment(string name)
+        {
+            var list = _departments.Select(e => e)
+                                   .Where(e => e.Name == name).ToList();
+            if (list.Count == 0)
+                return null;
+
+            return list.First();
         }
     }
 }

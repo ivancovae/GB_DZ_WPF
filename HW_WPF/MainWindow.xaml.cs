@@ -27,8 +27,17 @@ namespace HW_WPF
         private void btnAddDepartment_Click(object sender, RoutedEventArgs e)
         {
             EditDeportmant editDeportmantWindow = new EditDeportmant();
+            var context = editDeportmantWindow.DataContext;
+            if (context is EditDeportmentViewModel)
+            {
+                var deportmentVM = context as EditDeportmentViewModel;
+                var name = "Новый департамент";
+                deportmentVM.Department = new Department(name);
+                deportmentVM.DepartmentName = name;
+            }
             bool? result = editDeportmantWindow.ShowDialog();
-            if(result.HasValue && result.Value)
+
+            if (result.HasValue && result.Value)
             {
                 if (editDeportmantWindow.DataContext is EditDeportmentViewModel)
                 {
@@ -38,18 +47,49 @@ namespace HW_WPF
                         (DataContext as MainViewModel).AddDepartment(departament);
                     }
                 }
-            }
-            
+            }            
         }
 
         private void btnRemoveDepartment_Click(object sender, RoutedEventArgs e)
         {
+            var value = listBoxDepartments.SelectedValue;
+            if (value is string)
+            {
+                (DataContext as MainViewModel).RemoveDepartment((value as string));
+            }
 
         }
 
         private void btnEditDepartment_Click(object sender, RoutedEventArgs e)
         {
-
+            EditDeportmant editDeportmantWindow = new EditDeportmant();
+            var context = editDeportmantWindow.DataContext;
+            if (context is EditDeportmentViewModel)
+            {
+                var deportmentVM = context as EditDeportmentViewModel;
+                var value = listBoxDepartments.SelectedValue;
+                if (value is string)
+                {
+                    var name = value as string;
+                    if (DataContext is MainViewModel)
+                    {
+                        deportmentVM.Department = (DataContext as MainViewModel).GetDepartment(name);
+                    }
+                    deportmentVM.DepartmentName = name;
+                }
+            }
+            bool? result = editDeportmantWindow.ShowDialog();
+            if (result.HasValue && result.Value)
+            {
+                if (editDeportmantWindow.DataContext is EditDeportmentViewModel)
+                {
+                    Department departament = (editDeportmantWindow.DataContext as EditDeportmentViewModel).Department;
+                    if (DataContext is MainViewModel)
+                    {
+                        (DataContext as MainViewModel).UpdateDepartments();
+                    }
+                }
+            }
         }
     }
 }

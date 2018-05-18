@@ -57,5 +57,25 @@ namespace HW_WPF
 
             return false;
         }
+
+        public bool RemoveDepartment(string department)
+        {
+            if (_model.RemoveDepartment(department))
+            {
+                OnPropertyChanged("Deportments");
+                return true;
+            }
+            return false;
+        }
+
+        public Department GetDepartment(string name)
+        {
+            return _model.GetDepartment(name);
+        }
+
+        public void UpdateDepartments()
+        {
+            OnPropertyChanged("Deportments");
+        }
     }
 }

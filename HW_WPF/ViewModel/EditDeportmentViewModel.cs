@@ -12,7 +12,6 @@ namespace HW_WPF
     /// </summary>
     class EditDeportmentViewModel : INotifyPropertyChanged
     {
-        private readonly Department _model = new Department();
         /// <summary>
         /// Событие изменения свойств
         /// </summary>
@@ -29,11 +28,11 @@ namespace HW_WPF
         {
             get
             {
-                return _model.Name;
+                return Department.Name;
             }
             set
             {
-                _model.RenameDepartment(value);
+                Department.RenameDepartment(value);
                 OnPropertyChanged("DepartmentName"); // уведомление View о том, что изменилась название департамента
             }
         }
@@ -46,6 +45,6 @@ namespace HW_WPF
         /// <summary>
         /// Свойство модели для передачи в другую модель
         /// </summary>
-        public Department Department => _model;
+        public Department Department { get; set; }
     }
 }
