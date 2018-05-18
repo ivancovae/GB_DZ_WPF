@@ -15,8 +15,13 @@ namespace HW_WPF
     {
         private Dispatcher _dispatcher;
 
+        /// <summary>
+        /// Конструктор по умолчанию
+        /// </summary>
         public EditEmployeeViewModel() : this( null ) { }
-
+        /// <summary>
+        /// Конструктор с передачей службы для управления очередью рабочих элементов для потока
+        /// </summary>
         public EditEmployeeViewModel(Dispatcher dispatcher = null)
         {
             _dispatcher = dispatcher ?? Dispatcher.CurrentDispatcher;

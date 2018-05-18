@@ -28,6 +28,21 @@ namespace HW_WPF
         /// Событие изменения свойств
         /// </summary>
         public event PropertyChangedEventHandler PropertyChanged;
+        /// <summary>
+        /// Свойство модели для передачи в другую модель
+        /// </summary>
+        public Department Department
+        {
+            get
+            {
+                return _department;
+            }
+            set
+            {
+                _department = value;
+            }
+        }
+        private Department _department = null;
         protected virtual void OnPropertyChanged(string propertyName)
         {
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
@@ -40,7 +55,7 @@ namespace HW_WPF
         {
             get
             {
-                return Department.Name;
+                return _department?.Name ?? "";
             }
             set
             {
@@ -56,9 +71,6 @@ namespace HW_WPF
         /// </summary>
         public ObservableCollection<string> Employees => _employees;
 
-        /// <summary>
-        /// Свойство модели для передачи в другую модель
-        /// </summary>
-        public Department Department { get; set; }
+
     }
 }
