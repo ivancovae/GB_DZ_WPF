@@ -70,7 +70,5 @@ namespace HW_WPF
         /// Свойство списка сотрудников
         /// </summary>
         public ObservableCollection<string> Employees => _employees;
-
-
     }
 }

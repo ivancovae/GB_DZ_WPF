@@ -7,18 +7,11 @@ namespace HW_WPF
     /// </summary>
     class Employee
     {
-        private Guid _guid;
-        /// <summary>
-        /// Свойство уникального идентификатора сотрудника
-        /// </summary>
-        public string ID => _guid.ToString();
-
         private string _name;
         /// <summary>
         /// Свойство имени сотрудника
         /// </summary>
         public string Name => _name.ToString();
-
         private string _surname;
         /// <summary>
         /// Свойство фамилии сотрудника
@@ -30,7 +23,6 @@ namespace HW_WPF
         /// сотрудник может работать только в одном департаменте
         /// </summary>
         public Department Department => (_department.Target as Department);
-
         /// <summary>
         /// Конструктор создания карточки сотрудника
         /// </summary>
@@ -48,9 +40,7 @@ namespace HW_WPF
             _name = name;
             
             _department = new WeakReference(null, false);
-            _guid = Guid.NewGuid();
         }
-
         /// <summary>
         /// Изменение департамента сотрудника
         /// </summary>

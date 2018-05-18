@@ -10,25 +10,16 @@ namespace HW_WPF
     /// </summary>
     class Department
     {
-        private Guid _guid;
-        /// <summary>
-        /// Свойство уникального идентификатора департамента
-        /// </summary>
-        public string ID => _guid.ToString();
-
         private string _name;
         /// <summary>
         /// Свойство наименования департамента
         /// </summary>
         public string Name => _name.ToString();
-
         private List<Employee> _employees;
-
         /// <summary>
         /// Конструктор по умолчанию задает Без названия
         /// </summary>
         public Department() : this("Без названия") { }
-
         /// <summary>
         /// Конструктор создания карточки департамента
         /// </summary>
@@ -41,9 +32,7 @@ namespace HW_WPF
             _name = name;
             
             _employees = new List<Employee>();
-            _guid = Guid.NewGuid();
         }
-
         /// <summary>
         /// Добавление нового сотрудника
         /// </summary>
@@ -57,7 +46,6 @@ namespace HW_WPF
             employee.ChangeDepartment(this);
             return true;
         }
-
         /// <summary>
         /// Удаление сотрудника из департамента
         /// </summary>
@@ -71,7 +59,6 @@ namespace HW_WPF
             employee.ChangeDepartment(null);
             return true;
         }
-
         /// <summary>
         /// Проверка наличия сотрудника в департаменте
         /// </summary>
@@ -81,7 +68,6 @@ namespace HW_WPF
         {
             return _employees.IndexOf(employee) != -1;
         }
-
         /// <summary>
         /// Переименование департамента
         /// </summary>

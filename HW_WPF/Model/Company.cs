@@ -10,31 +10,20 @@ namespace HW_WPF
     /// </summary>
     class Company
     {
-        private Guid _guid;
-        /// <summary>
-        /// Свойство уникального идентификатора компании
-        /// </summary>
-        public string ID => _guid.ToString();
-
         private string _name;
         /// <summary>
         /// Свойство наименования компании
         /// </summary>
         public string Name => _name.ToString();
-        
         private List<Department> _departments;
-
         /// <summary>
         /// Список департаментов компании
         /// </summary>
         public List<string> Departments => _departments.Select(e=>e.Name).ToList();
-
-
         /// <summary>
         /// Конструктор по умолчанию задает Без названия
         /// </summary>
         public Company() : this("Без названия") {}
-
         /// <summary>
         /// Конструктор создания карточки компании
         /// </summary>
@@ -48,9 +37,7 @@ namespace HW_WPF
             _name = name;
 
             _departments = new List<Department>();
-            _guid = Guid.NewGuid();
         }
-
         /// <summary>
         /// Добавление департамента
         /// </summary>

@@ -14,6 +14,8 @@ namespace HW_WPF
     class EditEmployeeViewModel : INotifyPropertyChanged
     {
         private Dispatcher _dispatcher;
+        private Employee _employee;
+        private string _department;
 
         /// <summary>
         /// Конструктор по умолчанию
@@ -25,6 +27,7 @@ namespace HW_WPF
         public EditEmployeeViewModel(Dispatcher dispatcher = null)
         {
             _dispatcher = dispatcher ?? Dispatcher.CurrentDispatcher;
+            _employee = new Employee("Без имени", "Без фамилии");
         }
         /// <summary>
         /// Событие изменения свойств
@@ -42,11 +45,11 @@ namespace HW_WPF
         {
             get
             {
-                return Employee.Name;
+                return _employee.Name;
             }
             set
             {
-                Employee.ChangeName(value);
+                _employee.ChangeName(value);
                 OnPropertyChanged("Name"); // уведомление View о том, что изменилась название департамента
             }
         }
@@ -57,12 +60,28 @@ namespace HW_WPF
         {
             get
             {
-                return Employee.SurName;
+                return _employee.SurName;
             }
             set
             {
-                Employee.ChangeSurname(value);
+                _employee.ChangeSurname(value);
                 OnPropertyChanged("Surname"); // уведомление View о том, что изменилась название департамента
+            }
+        }
+
+        /// <summary>
+        /// Свойство департамента
+        /// </summary>
+        public string EmployeeDepartment
+        {
+            get
+            {
+                return _employee.Department.Name;
+            }
+            set
+            {
+                _department = value;
+                OnPropertyChanged("Department"); // уведомление View о том, что изменилась название департамента
             }
         }
 
