@@ -27,7 +27,7 @@
         <TextBox x:Name="TextBoxCompany" Grid.Column="1" Grid.Row="0" Margin="5" Text="{Binding CompanyName, UpdateSourceTrigger=PropertyChanged}"/>
         <Label x:Name="labelTitleDeportments" Grid.Column="0" Grid.Row="1" Content="Депортаменты" Margin="5" HorizontalContentAlignment="Center"/>
         <!--Mode=OneWay необходим для призязки свойства только для чтения -->
-        <ListBox x:Name="listBoxDepartments"  Grid.Column="0" Grid.Row="2" Margin="5" ItemsSource="{Binding Number3, Mode=OneWay}"/>
+        <ListBox x:Name="listBoxDepartments"  Grid.Column="0" Grid.Row="2" Margin="5" ItemsSource="{Binding Deportments}" SelectionMode="Single"/>
         <StackPanel Grid.Column="1" Grid.Row="2" Orientation="Vertical">
             <Button x:Name="btnAddDepartment" Content="Добавить" VerticalAlignment="Center" HorizontalAlignment="Stretch" Margin="5" Click="btnAddDepartment_Click" Height="40"/>
             <Button x:Name="btnRemoveDepartment" Content="Удалить" VerticalAlignment="Center" HorizontalAlignment="Stretch" Margin="5" Click="btnRemoveDepartment_Click" Height="40"/>

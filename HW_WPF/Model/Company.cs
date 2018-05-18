@@ -27,8 +27,12 @@ namespace HW_WPF
         /// <summary>
         /// Список департаментов компании
         /// </summary>
-        public Department[] Departments => _departments.ToArray();
+        public string[] Departments => _departments.Select(e=>e.Name).ToArray();
 
+
+        /// <summary>
+        /// Конструктор по умолчанию задает Без названия
+        /// </summary>
         public Company() : this("Без названия") {}
 
         /// <summary>
@@ -57,6 +61,19 @@ namespace HW_WPF
         {
             var department = new Department(name);
             if (_departments.IndexOf(department) != -1)
+                return false;
+            _departments.Add(department);
+            return true;
+        }
+        /// <summary>
+        /// Добавление департамента
+        /// </summary>
+        /// <param name="department">Департамент</param>
+        /// <returns>Успешность добавления true при успешном добавление, false при уже существующем департаменте</returns>
+        public bool AddNewDepartment(Department department)
+        {
+            var list = _departments.Select(e => e.Name).ToList();
+            if (list.IndexOf(department.Name) != -1)
                 return false;
             _departments.Add(department);
             return true;

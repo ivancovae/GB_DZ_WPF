@@ -25,6 +25,11 @@ namespace HW_WPF
         private List<Employee> _employees;
 
         /// <summary>
+        /// Конструктор по умолчанию задает Без названия
+        /// </summary>
+        public Department() : this("Без названия") { }
+
+        /// <summary>
         /// Конструктор создания карточки департамента
         /// </summary>
         /// <exception cref="ArgumentException">Исключение некорретного ввода Наименования</exception>
@@ -75,6 +80,15 @@ namespace HW_WPF
         public bool CheckEmployee(Employee employee)
         {
             return _employees.IndexOf(employee) != -1;
+        }
+
+        /// <summary>
+        /// Переименование департамента
+        /// </summary>
+        /// <param name="newName">Новое имя</param>
+        public void RenameDepartment(string newName)
+        {
+            _name = newName;
         }
     }
 }

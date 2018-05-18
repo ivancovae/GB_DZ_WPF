@@ -10,9 +10,9 @@ namespace HW_WPF
     /// <summary>
     /// Класс View-Model уровня
     /// </summary>
-    class MainViewModel : INotifyPropertyChanged
+    class EditDeportmentViewModel : INotifyPropertyChanged
     {
-        private readonly Company _model = new Company();
+        private readonly Department _model = new Department();
         /// <summary>
         /// Событие изменения свойств
         /// </summary>
@@ -25,7 +25,7 @@ namespace HW_WPF
         /// <summary>
         /// Свойство наименования компании
         /// </summary>
-        public string CompanyName
+        public string DepartmentName
         {
             get
             {
@@ -33,14 +33,19 @@ namespace HW_WPF
             }
             set
             {
-                _model.RenameCompany(value);
-                OnPropertyChanged("CompanyName"); // уведомление View о том, что изменилась название компании
+                _model.RenameDepartment(value);
+                OnPropertyChanged("DepartmentName"); // уведомление View о том, что изменилась название департамента
             }
         }
-        private ObservableCollection<string> _deportments = new ObservableCollection<string>();
+        private ObservableCollection<string> _employees = new ObservableCollection<string>();
         /// <summary>
-        /// Свойство списка департаментов
+        /// Свойство списка сотрудников
         /// </summary>
-        public ObservableCollection<string> Deportments => _deportments;
+        public ObservableCollection<string> Employees => _employees;
+
+        /// <summary>
+        /// Свойство модели для передачи в другую модель
+        /// </summary>
+        public Department Department => _model;
     }
 }

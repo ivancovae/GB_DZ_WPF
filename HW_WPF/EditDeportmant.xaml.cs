@@ -37,5 +37,16 @@ namespace HW_WPF
         {
 
         }
+
+        private void btnSaveDepartment_Click(object sender, RoutedEventArgs e)
+        {
+            DialogResult = true;
+            Close();
+        }
+
+        private void btnCancelDepartment_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
     }
 }
