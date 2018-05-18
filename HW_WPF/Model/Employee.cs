@@ -66,5 +66,27 @@ namespace HW_WPF
             if (Department != null && !Department.CheckEmployee(this))
                 Department.AddNewEmployee(this);
         }
+        /// <summary>
+        /// Смена имени сотрудника
+        /// </summary>
+        /// <exception cref="ArgumentException">Исключение некорретного ввода Имени</exception>
+        /// <param name="name">Новое имя</param>
+        public void ChangeName(string name)
+        {
+            if (name == null || name == "")
+                throw new ArgumentException($"Имя не должно быть пустым", "name");
+            _name = name;
+        }
+        /// <summary>
+        /// Смена фамилии сотрудника
+        /// </summary>
+        /// <exception cref="ArgumentException">Исключение некорретного ввода Фамилии</exception>
+        /// <param name="name">Новое имя</param>
+        public void ChangeSurname(string surname)
+        {
+            if (surname == null || surname == "")
+                throw new ArgumentException($"Фамилия не должна быть пустым", "name");
+            _surname = surname;
+        }
     }
 }

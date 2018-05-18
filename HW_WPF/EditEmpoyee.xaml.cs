@@ -25,12 +25,13 @@ namespace HW_WPF
 
         private void btnSaveEmployee_Click(object sender, RoutedEventArgs e)
         {
-
+            DialogResult = true;
+            Close();
         }
 
         private void btnCancelEmployee_Click(object sender, RoutedEventArgs e)
         {
-
+            Close();
         }
     }
 }

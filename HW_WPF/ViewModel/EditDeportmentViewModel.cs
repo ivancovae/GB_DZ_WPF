@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.ComponentModel;
 using System.Collections.ObjectModel;
+using System.Windows.Threading;
 
 namespace HW_WPF
 {
@@ -12,6 +13,17 @@ namespace HW_WPF
     /// </summary>
     class EditDeportmentViewModel : INotifyPropertyChanged
     {
+        /// <summary>
+        /// Конструктор по умолчанию
+        /// </summary>
+        public EditDeportmentViewModel() : this( null ) { }
+        /// <summary>
+        /// Конструктор с передачей службы для управления очередью рабочих элементов для потока
+        /// </summary>
+        public EditDeportmentViewModel(Dispatcher dispatcher = null)
+        {
+            _dispatcher = dispatcher ?? Dispatcher.CurrentDispatcher;
+        }
         /// <summary>
         /// Событие изменения свойств
         /// </summary>
@@ -22,7 +34,7 @@ namespace HW_WPF
         }
         
         /// <summary>
-        /// Свойство наименования компании
+        /// Свойство наименования департамента
         /// </summary>
         public string DepartmentName
         {
@@ -37,6 +49,8 @@ namespace HW_WPF
             }
         }
         private ObservableCollection<string> _employees = new ObservableCollection<string>();
+        private Dispatcher _dispatcher;
+
         /// <summary>
         /// Свойство списка сотрудников
         /// </summary>

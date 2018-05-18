@@ -23,17 +23,38 @@ namespace HW_WPF
             InitializeComponent();
         }
 
-        private void btnAddDepartment_Click(object sender, RoutedEventArgs e)
+        private void btnAddEmployee_Click(object sender, RoutedEventArgs e)
+        {
+            //EditEmpoyee editEmpoyeeWindow = new EditEmpoyee();
+            //var context = editEmpoyeeWindow.DataContext;
+            //if (context is EditEmployeeViewModel)
+            //{
+            //    var employeeVM = context as EditEmployeeViewModel;
+            //    var name = "Новый департамент";
+            //    employeeVM.Department = new Department(name);
+            //    employeeVM.DepartmentName = name;
+            //}
+            //bool? result = editDeportmantWindow.ShowDialog();
+
+            //if (result.HasValue && result.Value)
+            //{
+            //    if (editDeportmantWindow.DataContext is EditDeportmentViewModel)
+            //    {
+            //        Department departament = (editDeportmantWindow.DataContext as EditDeportmentViewModel).Department;
+            //        if (DataContext is MainViewModel)
+            //        {
+            //            (DataContext as MainViewModel).AddDepartment(departament);
+            //        }
+            //    }
+            //}
+        }
+
+        private void btnRemoveEmployee_Click(object sender, RoutedEventArgs e)
         {
 
         }
 
-        private void btnRemoveDepartment_Click(object sender, RoutedEventArgs e)
-        {
-
-        }
-
-        private void btnEditDepartment_Click(object sender, RoutedEventArgs e)
+        private void btnEditEmployee_Click(object sender, RoutedEventArgs e)
         {
 
         }
@@ -46,7 +67,7 @@ namespace HW_WPF
 
         private void btnCancelDepartment_Click(object sender, RoutedEventArgs e)
         {
-
+            Close();
         }
     }
 }
