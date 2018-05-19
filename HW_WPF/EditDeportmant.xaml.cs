@@ -74,26 +74,27 @@ namespace HW_WPF
             {
                 var employeeVM = context as EditEmployeeViewModel;
                 var value = listBoxEmployees.SelectedValue;
-                if (value is string)
+                if (value is string && value != null)
                 {
                     var name = value as string;
                     if (DataContext is EditDeportmentViewModel)
                     {
                         employeeVM.Employee = (DataContext as EditDeportmentViewModel).GetEmployee(name);
                     }
-                }
-            }
-            bool? result = editEmpoyeeWindow.ShowDialog();
-            if (result.HasValue && result.Value)
-            {
-                if (editEmpoyeeWindow.DataContext is EditEmployeeViewModel)
-                {
-                    if (DataContext is EditDeportmentViewModel)
+                    bool? result = editEmpoyeeWindow.ShowDialog();
+                    if (result.HasValue && result.Value)
                     {
-                        (DataContext as EditDeportmentViewModel).UpdateEmployees((editEmpoyeeWindow.DataContext as EditEmployeeViewModel).Employee);
+                        if (editEmpoyeeWindow.DataContext is EditEmployeeViewModel)
+                        {
+                            if (DataContext is EditDeportmentViewModel)
+                            {
+                                (DataContext as EditDeportmentViewModel).UpdateEmployees((editEmpoyeeWindow.DataContext as EditEmployeeViewModel).Employee);
+                            }
+                        }
                     }
                 }
             }
+            
         }
 
         private void btnSaveDepartment_Click(object sender, RoutedEventArgs e)

@@ -71,7 +71,7 @@ namespace HW_WPF
             {
                 var deportmentVM = context as EditDeportmentViewModel;
                 var value = listBoxDepartments.SelectedValue;
-                if (value is string)
+                if (value is string && value != null)
                 {
                     var name = value as string;
                     if (DataContext is MainViewModel)
@@ -79,19 +79,21 @@ namespace HW_WPF
                         deportmentVM.Department = (DataContext as MainViewModel).GetDepartment(name);
                     }
                     deportmentVM.DepartmentName = name;
-                }
-            }
-            bool? result = editDeportmantWindow.ShowDialog();
-            if (result.HasValue && result.Value)
-            {
-                if (editDeportmantWindow.DataContext is EditDeportmentViewModel)
-                {
-                    if (DataContext is MainViewModel)
+
+                    bool? result = editDeportmantWindow.ShowDialog();
+                    if (result.HasValue && result.Value)
                     {
-                        (DataContext as MainViewModel).UpdateDepartments((editDeportmantWindow.DataContext as EditDeportmentViewModel).Department);
+                        if (editDeportmantWindow.DataContext is EditDeportmentViewModel)
+                        {
+                            if (DataContext is MainViewModel)
+                            {
+                                (DataContext as MainViewModel).UpdateDepartments((editDeportmantWindow.DataContext as EditDeportmentViewModel).Department);
+                            }
+                        }
                     }
                 }
             }
+            
         }
     }
 }
