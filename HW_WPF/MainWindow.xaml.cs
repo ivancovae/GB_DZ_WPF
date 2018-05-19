@@ -83,10 +83,9 @@ namespace HW_WPF
             {
                 if (editDeportmantWindow.DataContext is EditDeportmentViewModel)
                 {
-                    Department departament = (editDeportmantWindow.DataContext as EditDeportmentViewModel).Department;
                     if (DataContext is MainViewModel)
                     {
-                        (DataContext as MainViewModel).UpdateDepartments();
+                        (DataContext as MainViewModel).UpdateDepartments((editDeportmantWindow.DataContext as EditDeportmentViewModel).Department);
                     }
                 }
             }

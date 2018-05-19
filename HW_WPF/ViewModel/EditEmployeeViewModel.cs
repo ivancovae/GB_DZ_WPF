@@ -50,7 +50,7 @@ namespace HW_WPF
             set
             {
                 _employee.ChangeName(value);
-                OnPropertyChanged("Name"); // уведомление View о том, что изменилась название департамента
+                OnPropertyChanged("EmployeeName"); // уведомление View о том, что изменилась название департамента
             }
         }
         /// <summary>
@@ -65,7 +65,7 @@ namespace HW_WPF
             set
             {
                 _employee.ChangeSurname(value);
-                OnPropertyChanged("Surname"); // уведомление View о том, что изменилась название департамента
+                OnPropertyChanged("EmployeeSurname"); // уведомление View о том, что изменилась название департамента
             }
         }
 
@@ -88,6 +88,6 @@ namespace HW_WPF
         /// <summary>
         /// Свойство модели для передачи в другую модель
         /// </summary>
-        public Employee Employee { get; set; }
+        public Employee Employee { get => _employee; set => _employee = value; }
     }
 }

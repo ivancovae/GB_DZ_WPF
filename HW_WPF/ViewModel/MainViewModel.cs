@@ -74,7 +74,7 @@ namespace HW_WPF
             return _company.GetDepartment(name);
         }
 
-        public void UpdateDepartments()
+        public void UpdateDepartments(Department department)
         {
             OnPropertyChanged("Deportments");
         }

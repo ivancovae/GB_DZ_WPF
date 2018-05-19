@@ -24,7 +24,7 @@
         </Grid.ColumnDefinitions>
         <Label x:Name="labelTitleDepartment" Grid.Column="0" Grid.Row="0" Content="Департамент" Margin="5" HorizontalContentAlignment="Center"/>
         <TextBox x:Name="TextBoxDepartment" Grid.Column="1" Grid.Row="0" Margin="5" Text="{Binding DepartmentName, UpdateSourceTrigger=PropertyChanged}"/>
-        <ListBox x:Name="listBoxEmployees"  Grid.Column="0" Grid.Row="1" Margin="5" ItemsSource="{Binding Employees, Mode=OneWay}"/>
+        <ListBox x:Name="listBoxEmployees"  Grid.Column="0" Grid.Row="1" Margin="5" ItemsSource="{Binding Employees}" SelectionMode="Single"/>
         <StackPanel Grid.Column="1" Grid.Row="2" Orientation="Vertical">
             <Button x:Name="btnAddEmployee" Content="Добавить" VerticalAlignment="Center" HorizontalAlignment="Stretch" Margin="5" Click="btnAddEmployee_Click"/>
             <Button x:Name="btnRemoveEmployee" Content="Удалить" VerticalAlignment="Center" HorizontalAlignment="Stretch" Margin="5" Click="btnRemoveEmployee_Click"/>

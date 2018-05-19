@@ -17,6 +17,10 @@ namespace HW_WPF
         public string Name => _name.ToString();
         private List<Employee> _employees;
         /// <summary>
+        /// Список сотрудников департамента
+        /// </summary>
+        public List<string> Employees => _employees.Select(e => (e.Name + " " + e.SurName)).ToList();
+        /// <summary>
         /// Конструктор по умолчанию задает Без названия
         /// </summary>
         public Department() : this("Без названия") { }
@@ -29,8 +33,7 @@ namespace HW_WPF
         {
             if (name == null || name == "")
                 throw new ArgumentException($"Имя не должно быть пустым", "name");
-            _name = name;
-            
+            _name = name;            
             _employees = new List<Employee>();
         }
         /// <summary>
@@ -60,13 +63,29 @@ namespace HW_WPF
             return true;
         }
         /// <summary>
+        /// Удаление сотрудника из департамента
+        /// </summary>
+        /// <param name="employee">Сотрудник</param>
+        /// <returns>Успешность удаления true при успешном удаление, false при не возможности удаления сотрудника</returns>
+        public bool RemoveEmployee(string employee)
+        {
+            var list = _employees.Select(e => e)
+                                 .Where(e => employee == e.Name + " " + e.SurName).ToList();
+            if (list.Count() == 0)
+                return false;
+            _employees.Remove(list.First());
+            return true;
+        }
+        /// <summary>
         /// Проверка наличия сотрудника в департаменте
         /// </summary>
         /// <param name="employee">Сотрудник</param>
         /// <returns>Результат наличия сотрудника</returns>
         public bool CheckEmployee(Employee employee)
         {
-            return _employees.IndexOf(employee) != -1;
+            return _employees.Select(e => e)
+                             .Where(e => ((e.Name == employee.Name) && (e.SurName == employee.SurName)))
+                             .Count() > 0;
         }
         /// <summary>
         /// Переименование департамента

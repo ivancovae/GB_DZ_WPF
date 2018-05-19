@@ -13,6 +13,7 @@ namespace HW_WPF
     /// </summary>
     class EditDeportmentViewModel : INotifyPropertyChanged
     {
+        private Dispatcher _dispatcher;
         /// <summary>
         /// Конструктор по умолчанию
         /// </summary>
@@ -40,6 +41,7 @@ namespace HW_WPF
             set
             {
                 _department = value;
+                OnPropertyChanged("Employees"); // уведомление View о том, что изменилась название компании
             }
         }
         private Department _department = null;
@@ -59,16 +61,34 @@ namespace HW_WPF
             }
             set
             {
-                Department.RenameDepartment(value);
+                _department?.RenameDepartment(value);
                 OnPropertyChanged("DepartmentName"); // уведомление View о том, что изменилась название департамента
             }
         }
         private ObservableCollection<string> _employees = new ObservableCollection<string>();
-        private Dispatcher _dispatcher;
-
         /// <summary>
         /// Свойство списка сотрудников
         /// </summary>
-        public ObservableCollection<string> Employees => _employees;
+        public ObservableCollection<string> Employees => new ObservableCollection<string>(_department.Employees);
+
+        public bool AddEmployee(Employee employee)
+        {
+            if (_department.AddNewEmployee(employee))
+            {
+                OnPropertyChanged("Employees");
+                return true;
+            }
+
+            return false;
+        }
+        public bool RemoveEmployee(string employee)
+        {
+            if (_department.RemoveEmployee(employee))
+            {
+                OnPropertyChanged("Employees");
+                return true;
+            }
+            return false;
+        }
     }
 }

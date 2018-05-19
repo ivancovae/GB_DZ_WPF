@@ -25,33 +25,41 @@ namespace HW_WPF
 
         private void btnAddEmployee_Click(object sender, RoutedEventArgs e)
         {
-            //EditEmpoyee editEmpoyeeWindow = new EditEmpoyee();
-            //var context = editEmpoyeeWindow.DataContext;
-            //if (context is EditEmployeeViewModel)
-            //{
-            //    var employeeVM = context as EditEmployeeViewModel;
-            //    var name = "Новый департамент";
-            //    employeeVM.Department = new Department(name);
-            //    employeeVM.DepartmentName = name;
-            //}
-            //bool? result = editDeportmantWindow.ShowDialog();
+            EditEmpoyee editEmpoyeeWindow = new EditEmpoyee();
+            var context = editEmpoyeeWindow.DataContext;
+            if (context is EditEmployeeViewModel)
+            {
+                var employeeVM = context as EditEmployeeViewModel;
+                var name = "Без имени";
+                var surname = "Без фамилии";
+                employeeVM.Employee = new Employee(name, surname);
+                employeeVM.EmployeeName = name;
+                employeeVM.EmployeeSurname = surname;
+            }
+            bool? result = editEmpoyeeWindow.ShowDialog();
 
-            //if (result.HasValue && result.Value)
-            //{
-            //    if (editDeportmantWindow.DataContext is EditDeportmentViewModel)
-            //    {
-            //        Department departament = (editDeportmantWindow.DataContext as EditDeportmentViewModel).Department;
-            //        if (DataContext is MainViewModel)
-            //        {
-            //            (DataContext as MainViewModel).AddDepartment(departament);
-            //        }
-            //    }
-            //}
+            if (result.HasValue && result.Value)
+            {
+                if (editEmpoyeeWindow.DataContext is EditEmployeeViewModel)
+                {
+                    Employee employee = (editEmpoyeeWindow.DataContext as EditEmployeeViewModel).Employee;
+                    if (DataContext is EditDeportmentViewModel)
+                    {
+                        var temp = (DataContext as EditDeportmentViewModel);
+                        employee.ChangeDepartment(temp.Department);
+                        temp.AddEmployee(employee);
+                    }
+                }
+            }
         }
 
         private void btnRemoveEmployee_Click(object sender, RoutedEventArgs e)
         {
-
+            var value = listBoxEmployees.SelectedValue;
+            if (value is string)
+            {
+                (DataContext as EditDeportmentViewModel).RemoveEmployee((value as string));
+            }
         }
 
         private void btnEditEmployee_Click(object sender, RoutedEventArgs e)
