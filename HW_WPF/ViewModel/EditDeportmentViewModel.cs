@@ -90,5 +90,13 @@ namespace HW_WPF
             }
             return false;
         }
+        public Employee GetEmployee(string name)
+        {
+            return _department.GetEmployee(name);
+        }
+        public void UpdateEmployees(Employee employee)
+        {
+            OnPropertyChanged("Employees");
+        }
     }
 }

@@ -95,5 +95,18 @@ namespace HW_WPF
         {
             _name = newName;
         }
+        /// <summary>
+        /// Возврат Сотрудника по имени из списка
+        /// </summary>
+        /// <param name="name">Сотрудник</param>
+        /// <returns>сотрудник, если он есть в списке департамента</returns>
+        public Employee GetEmployee(string name)
+        {
+            var list = _employees.Select(e => e)
+                                   .Where(e => ((e.Name + " " + e.SurName) == name));
+            if (list.Count() == 0)
+                return null;
+            return list.First();
+        }
     }
 }

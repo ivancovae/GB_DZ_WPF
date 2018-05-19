@@ -32,7 +32,7 @@
         <Label x:Name="labelEmployeeSurname" Grid.Row="2" Grid.Column="0" Content="Фамилия" Margin="5" HorizontalContentAlignment="Center"/>
         <TextBox x:Name="textBoxEmployeeSurname" Grid.Row="2" Grid.Column="1" Margin="5" HorizontalContentAlignment="Center" Text="{Binding EmployeeSurname, UpdateSourceTrigger=PropertyChanged}"/>
         <Label x:Name="labelEmployeeDepartment" Grid.Row="3" Grid.Column="0" Content="Департамент" Margin="5" HorizontalContentAlignment="Center"/>
-        <ComboBox x:Name="textBoxEmployeeDepartment" Grid.Row="3" Grid.Column="1" Margin="5" HorizontalContentAlignment="Center" ItemsSource="{Binding Departments, Source={StaticResource Company}}" SelectedIndex="{Binding EmployeeDepartment, UpdateSourceTrigger=PropertyChanged}"/>
+        <ComboBox x:Name="textBoxEmployeeDepartment" Grid.Row="3" Grid.Column="1" Margin="5" HorizontalContentAlignment="Center" ItemsSource="{Binding Departments, Source={StaticResource Company}}" SelectedValue="{Binding EmployeeDepartment, UpdateSourceTrigger=PropertyChanged}"/>
         <Button x:Name="btnSaveEmployee" Grid.Row="4" Grid.Column="0" Content="Сохранить" Margin="5" HorizontalContentAlignment="Center" Click="btnSaveEmployee_Click"></Button>
         <Button x:Name="btnCancelEmployee" Grid.Row="4" Grid.Column="1" Content="Отменить" Margin="5" HorizontalContentAlignment="Center" Click="btnCancelEmployee_Click"></Button>
     </Grid>

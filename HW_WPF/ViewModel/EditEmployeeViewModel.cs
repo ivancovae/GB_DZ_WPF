@@ -15,7 +15,6 @@ namespace HW_WPF
     {
         private Dispatcher _dispatcher;
         private Employee _employee;
-        private string _department;
 
         /// <summary>
         /// Конструктор по умолчанию
@@ -80,14 +79,28 @@ namespace HW_WPF
             }
             set
             {
-                _department = value;
-                OnPropertyChanged("Department"); // уведомление View о том, что изменилась название департамента
+                _employee.ChangeDepartment((App.Current.Resources["Company"] as Company).GetDepartment(value));
+                OnPropertyChanged("EmployeeDepartment"); // уведомление View о том, что изменилась название департамента
             }
         }
 
         /// <summary>
         /// Свойство модели для передачи в другую модель
         /// </summary>
-        public Employee Employee { get => _employee; set => _employee = value; }
+        public Employee Employee
+        {
+            get
+            {
+                return _employee;
+            }
+            set
+            {
+                _employee = value;
+                EmployeeDepartment = _employee.Department.Name;                
+                OnPropertyChanged("EmployeeName");
+                OnPropertyChanged("EmployeeSurname");
+                
+            }
+        }
     }
 }

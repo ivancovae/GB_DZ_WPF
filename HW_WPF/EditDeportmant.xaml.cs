@@ -64,7 +64,32 @@ namespace HW_WPF
 
         private void btnEditEmployee_Click(object sender, RoutedEventArgs e)
         {
-
+            EditEmpoyee editEmpoyeeWindow = new EditEmpoyee();
+            var context = editEmpoyeeWindow.DataContext;
+            if (context is EditEmployeeViewModel)
+            {
+                var employeeVM = context as EditEmployeeViewModel;
+                var value = listBoxEmployees.SelectedValue;
+                if (value is string)
+                {
+                    var name = value as string;
+                    if (DataContext is EditDeportmentViewModel)
+                    {
+                        employeeVM.Employee = (DataContext as EditDeportmentViewModel).GetEmployee(name);
+                    }
+                }
+            }
+            bool? result = editEmpoyeeWindow.ShowDialog();
+            if (result.HasValue && result.Value)
+            {
+                if (editEmpoyeeWindow.DataContext is EditEmployeeViewModel)
+                {
+                    if (DataContext is EditDeportmentViewModel)
+                    {
+                        (DataContext as EditDeportmentViewModel).UpdateEmployees((editEmpoyeeWindow.DataContext as EditEmployeeViewModel).Employee);
+                    }
+                }
+            }
         }
 
         private void btnSaveDepartment_Click(object sender, RoutedEventArgs e)
