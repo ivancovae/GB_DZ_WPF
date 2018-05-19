@@ -95,11 +95,11 @@ namespace HW_WPF
             }
             set
             {
-                _employee = value;
-                EmployeeDepartment = _employee.Department.Name;                
+                _employee = value;           
                 OnPropertyChanged("EmployeeName");
                 OnPropertyChanged("EmployeeSurname");
-                
+                OnPropertyChanged("EmployeeDepartment");
+
             }
         }
     }

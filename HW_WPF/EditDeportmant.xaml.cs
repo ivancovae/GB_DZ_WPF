@@ -48,6 +48,7 @@ namespace HW_WPF
                         var temp = (DataContext as EditDeportmentViewModel);
                         employee.ChangeDepartment(temp.Department);
                         temp.AddEmployee(employee);
+                        temp.UpdateEmployees(employee);
                     }
                 }
             }
