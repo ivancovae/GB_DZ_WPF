@@ -16,6 +16,7 @@ namespace HW_WPF
         {
             InitializeComponent();
 
+            // переделать на автоматическое заполнение. to do
             Company _company = Current.Resources["Company"] as Company;
             _company.RenameCompany("Рога и Копыта");
             Employee e00 = new Employee("Иван", "Иванов");

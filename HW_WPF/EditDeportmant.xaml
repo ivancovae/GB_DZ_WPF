@@ -30,7 +30,7 @@
             <Button x:Name="btnRemoveEmployee" Content="Удалить" VerticalAlignment="Center" HorizontalAlignment="Stretch" Margin="5" Click="btnRemoveEmployee_Click"/>
             <Button x:Name="btnEditEmployee" Content="Редактировать" VerticalAlignment="Center" HorizontalAlignment="Stretch" Margin="5" Click="btnEditEmployee_Click"/>
             <Button x:Name="btnSaveDepartment" Content="Сохранить" VerticalAlignment="Center" HorizontalAlignment="Stretch" Margin="5" Click="btnSaveDepartment_Click"/>
-            <Button x:Name="btnCancelDepartment" Content="Отменить" VerticalAlignment="Center" HorizontalAlignment="Stretch" Margin="5" Click="btnCancelDepartment_Click"/>
+            <Button x:Name="btnCancelDepartment" Content="Отменить" VerticalAlignment="Center" HorizontalAlignment="Stretch" Margin="5" Click="btnCancelDepartment_Click" IsEnabled="False"/>
         </StackPanel>
     </Grid>
 </Window>

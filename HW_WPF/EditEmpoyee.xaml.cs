@@ -18,6 +18,9 @@ namespace HW_WPF
     /// </summary>
     public partial class EditEmpoyee : Window
     {
+        /// <summary>
+        /// Конструктор по уполчанию
+        /// </summary>
         public EditEmpoyee()
         {
             InitializeComponent();

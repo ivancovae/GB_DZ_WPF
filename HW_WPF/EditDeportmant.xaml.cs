@@ -18,6 +18,9 @@ namespace HW_WPF
     /// </summary>
     public partial class EditDeportmant : Window
     {
+        /// <summary>
+        /// Конструктор по умолчанию
+        /// </summary>
         public EditDeportmant()
         {
             InitializeComponent();

@@ -22,7 +22,6 @@ namespace HW_WPF
         {
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
         }
-        
         /// <summary>
         /// Свойство наименования компании
         /// </summary>
@@ -42,7 +41,6 @@ namespace HW_WPF
         /// Свойство списка департаментов
         /// </summary>
         public ObservableCollection<string> Deportments => new ObservableCollection<string>(_company.Departments);
-
         /// <summary>
         /// Добавление департамента в модель из вне. Пока что не придумал на скорую руку другой подход. to do
         /// </summary>
@@ -58,7 +56,11 @@ namespace HW_WPF
 
             return false;
         }
-
+        /// <summary>
+        /// Удаление департамента по элементу из списка
+        /// </summary>
+        /// <param name="department">название департамента</param>
+        /// <returns>успешность удаления</returns>
         public bool RemoveDepartment(string department)
         {
             if (_company.RemoveDepartment(department))
@@ -68,12 +70,19 @@ namespace HW_WPF
             }
             return false;
         }
-
+        /// <summary>
+        /// Получение объекта департамента по имени из списка
+        /// </summary>
+        /// <param name="name">название департамента</param>
+        /// <returns>объект департамента</returns>
         public Department GetDepartment(string name)
         {
             return _company.GetDepartment(name);
         }
-
+        /// <summary>
+        /// to do. Обнавление департаментов
+        /// </summary>
+        /// <param name="department">объект департамента</param>
         public void UpdateDepartments(Department department)
         {
             OnPropertyChanged("Deportments");

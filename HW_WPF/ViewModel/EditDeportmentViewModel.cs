@@ -49,7 +49,6 @@ namespace HW_WPF
         {
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
         }
-        
         /// <summary>
         /// Свойство наименования департамента
         /// </summary>
@@ -71,6 +70,11 @@ namespace HW_WPF
         /// </summary>
         public ObservableCollection<string> Employees => new ObservableCollection<string>(_department.Employees);
 
+        /// <summary>
+        /// Добавление сотрудника
+        /// </summary>
+        /// <param name="employee">объект сотрудника</param>
+        /// <returns>успешность добавления сотрудника</returns>
         public bool AddEmployee(Employee employee)
         {
             if (_department.AddNewEmployee(employee))
@@ -81,6 +85,11 @@ namespace HW_WPF
 
             return false;
         }
+        /// <summary>
+        /// Удаление сотрудника по имени из списка
+        /// </summary>
+        /// <param name="employee">имя сотрудника Имя + Фамилия</param>
+        /// <returns>успешность удаления сотрудника</returns>
         public bool RemoveEmployee(string employee)
         {
             if (_department.RemoveEmployee(employee))
@@ -90,10 +99,19 @@ namespace HW_WPF
             }
             return false;
         }
+        /// <summary>
+        /// получение объекта сотрудника по имени из списка
+        /// </summary>
+        /// <param name="name">имя сотрудника из списка</param>
+        /// <returns>объект сотрудника</returns>
         public Employee GetEmployee(string name)
         {
             return _department.GetEmployee(name);
         }
+        /// <summary>
+        /// Обновление Сотрудников с передачей текущего измененного
+        /// </summary>
+        /// <param name="employee">Сотрудник</param>
         public void UpdateEmployees(Employee employee)
         {
             OnPropertyChanged("Employees");

@@ -15,7 +15,6 @@ namespace HW_WPF
     {
         private Dispatcher _dispatcher;
         private Employee _employee;
-
         /// <summary>
         /// Конструктор по умолчанию
         /// </summary>
@@ -36,7 +35,6 @@ namespace HW_WPF
         {
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
         }
-
         /// <summary>
         /// Свойство Имени
         /// </summary>
@@ -67,7 +65,6 @@ namespace HW_WPF
                 OnPropertyChanged("EmployeeSurname"); // уведомление View о том, что изменилась название департамента
             }
         }
-
         /// <summary>
         /// Свойство департамента
         /// </summary>
@@ -83,7 +80,6 @@ namespace HW_WPF
                 OnPropertyChanged("EmployeeDepartment"); // уведомление View о том, что изменилась название департамента
             }
         }
-
         /// <summary>
         /// Свойство модели для передачи в другую модель
         /// </summary>

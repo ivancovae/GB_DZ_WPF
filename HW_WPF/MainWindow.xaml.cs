@@ -19,6 +19,9 @@ namespace HW_WPF
     /// </summary>
     public partial class MainWindow : Window
     {
+        /// <summary>
+        /// Конструктор по умолчанию
+        /// </summary>
         public MainWindow()
         {
             InitializeComponent();
