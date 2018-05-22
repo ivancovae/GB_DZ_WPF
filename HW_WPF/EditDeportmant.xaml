@@ -9,10 +9,6 @@
         Height="360" Width="430"
         MinHeight="360" MinWidth="430"
         MaxHeight="600" MaxWidth="430">
-    <Window.DataContext>
-        <local:EditDeportmentViewModel/>
-        <!-- Создаем новый VM и соединяем его со View -->
-    </Window.DataContext>
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="40"/>
@@ -23,14 +19,14 @@
             <ColumnDefinition/>
         </Grid.ColumnDefinitions>
         <Label x:Name="labelTitleDepartment" Grid.Column="0" Grid.Row="0" Content="Департамент" Margin="5" HorizontalContentAlignment="Center"/>
-        <TextBox x:Name="TextBoxDepartment" Grid.Column="1" Grid.Row="0" Margin="5" Text="{Binding DepartmentName, UpdateSourceTrigger=PropertyChanged}"/>
-        <ListBox x:Name="listBoxEmployees"  Grid.Column="0" Grid.Row="1" Margin="5" ItemsSource="{Binding Employees}" SelectionMode="Single"/>
+        <TextBox x:Name="TextBoxDepartment" Grid.Column="1" Grid.Row="0" Margin="5"/>
+        <ListBox x:Name="listBoxEmployees"  Grid.Column="0" Grid.Row="1" Margin="5" SelectionMode="Single"/>
         <StackPanel Grid.Column="1" Grid.Row="2" Orientation="Vertical">
-            <Button x:Name="btnAddEmployee" Content="Добавить" VerticalAlignment="Center" HorizontalAlignment="Stretch" Margin="5" Click="btnAddEmployee_Click"/>
-            <Button x:Name="btnRemoveEmployee" Content="Удалить" VerticalAlignment="Center" HorizontalAlignment="Stretch" Margin="5" Click="btnRemoveEmployee_Click"/>
-            <Button x:Name="btnEditEmployee" Content="Редактировать" VerticalAlignment="Center" HorizontalAlignment="Stretch" Margin="5" Click="btnEditEmployee_Click"/>
-            <Button x:Name="btnSaveDepartment" Content="Сохранить" VerticalAlignment="Center" HorizontalAlignment="Stretch" Margin="5" Click="btnSaveDepartment_Click"/>
-            <Button x:Name="btnCancelDepartment" Content="Отменить" VerticalAlignment="Center" HorizontalAlignment="Stretch" Margin="5" Click="btnCancelDepartment_Click" IsEnabled="False"/>
+            <Button x:Name="btnAddEmployee" Content="Добавить" VerticalAlignment="Center" HorizontalAlignment="Stretch" Margin="5"/>
+            <Button x:Name="btnRemoveEmployee" Content="Удалить" VerticalAlignment="Center" HorizontalAlignment="Stretch" Margin="5"/>
+            <Button x:Name="btnEditEmployee" Content="Редактировать" VerticalAlignment="Center" HorizontalAlignment="Stretch" Margin="5"/>
+            <Button x:Name="btnSaveDepartment" Content="Сохранить" VerticalAlignment="Center" HorizontalAlignment="Stretch" Margin="5"/>
+            <Button x:Name="btnCancelDepartment" Content="Отменить" VerticalAlignment="Center" HorizontalAlignment="Stretch" Margin="5" IsEnabled="False"/>
         </StackPanel>
     </Grid>
 </Window>

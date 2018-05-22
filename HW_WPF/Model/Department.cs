@@ -1,39 +1,35 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 
 namespace HW_WPF
 {
     /// <summary>
     /// Класс карточки департамента
     /// </summary>
-    class Department
+    class Department : IEnumerable<Employee>
     {
-        private string _name;
+        #region Данные
         /// <summary>
         /// Свойство наименования департамента
         /// </summary>
-        public string Name => _name.ToString();
+        public string Name { set; get; }
         private List<Employee> _employees;
         /// <summary>
         /// Список сотрудников департамента
         /// </summary>
-        public List<string> Employees => _employees.Select(e => (e.Name + " " + e.SurName)).ToList();
-        /// <summary>
-        /// Конструктор по умолчанию задает Без названия
-        /// </summary>
-        public Department() : this("Без названия") { }
+        public List<string> Employees => _employees.Select(e => (e.Name)).ToList();
+        #endregion
+
+        private Department() { }
         /// <summary>
         /// Конструктор создания карточки департамента
         /// </summary>
-        /// <exception cref="ArgumentException">Исключение некорретного ввода Наименования</exception>
         /// <param name="name">Наименование</param>
         public Department(string name)
         {
-            if (name == null || name == "")
-                throw new ArgumentException($"Имя не должно быть пустым", "name");
-            _name = name;            
+            Name = name;
             _employees = new List<Employee>();
         }
         /// <summary>
@@ -54,14 +50,7 @@ namespace HW_WPF
         /// </summary>
         /// <param name="employee">Сотрудник</param>
         /// <returns>Успешность удаления true при успешном удаление, false при не возможности удаления сотрудника</returns>
-        public bool RemoveEmployee(Employee employee)
-        {
-            if (!CheckEmployee(employee))
-                return false;
-            _employees.Remove(employee);
-            employee.ChangeDepartment(null);
-            return true;
-        }
+        public bool RemoveEmployee(Employee employee) => RemoveEmployee(employee.Name);
         /// <summary>
         /// Удаление сотрудника из департамента
         /// </summary>
@@ -70,7 +59,7 @@ namespace HW_WPF
         public bool RemoveEmployee(string employee)
         {
             var list = _employees.Select(e => e)
-                                 .Where(e => employee == e.Name + " " + e.SurName).ToList();
+                                 .Where(e => employee == e.Name).ToList();
             if (list.Count() == 0)
                 return false;
             _employees.Remove(list.First());
@@ -81,20 +70,9 @@ namespace HW_WPF
         /// </summary>
         /// <param name="employee">Сотрудник</param>
         /// <returns>Результат наличия сотрудника</returns>
-        public bool CheckEmployee(Employee employee)
-        {
-            return _employees.Select(e => e)
-                             .Where(e => ((e.Name == employee.Name) && (e.SurName == employee.SurName)))
-                             .Count() > 0;
-        }
-        /// <summary>
-        /// Переименование департамента
-        /// </summary>
-        /// <param name="newName">Новое имя</param>
-        public void RenameDepartment(string newName)
-        {
-            _name = newName;
-        }
+        public bool CheckEmployee(Employee employee) => _employees.Select(e => e)
+                                                                  .Where(e => (e.Name == employee.Name))
+                                                                  .Count() > 0;
         /// <summary>
         /// Возврат Сотрудника по имени из списка
         /// </summary>
@@ -103,10 +81,23 @@ namespace HW_WPF
         public Employee GetEmployee(string name)
         {
             var list = _employees.Select(e => e)
-                                   .Where(e => ((e.Name + " " + e.SurName) == name));
+                                 .Where(e => (e.Name == name));
             if (list.Count() == 0)
                 return null;
             return list.First();
+        }
+
+        public IEnumerator<Employee> GetEnumerator()
+        {
+            foreach(var employee in _employees)
+            {
+                yield return employee as Employee;
+            }
+        }
+
+        IEnumerator IEnumerable.GetEnumerator()
+        {
+            return ((IEnumerable<Employee>)_employees).GetEnumerator();
         }
     }
 }

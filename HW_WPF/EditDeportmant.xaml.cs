@@ -16,96 +16,65 @@ namespace HW_WPF
     /// <summary>
     /// Interaction logic for EditDeportmant.xaml
     /// </summary>
-    public partial class EditDeportmant : Window
+    public partial class EditDeportmant : Window, IDepartmentView
     {
-        /// <summary>
-        /// Конструктор по умолчанию
-        /// </summary>
+        #region IDepartmentView
+        public string DepartmentName
+        {
+            get
+            {
+                return TextBoxDepartment.Text;
+            }
+
+            set
+            {
+                TextBoxDepartment.Text = value;
+            }
+        }
+
+        public List<string> Employees
+        {
+            get
+            {
+                return listBoxEmployees.ItemsSource as List<string>;
+            }
+
+            set
+            {
+                listBoxEmployees.ItemsSource = value;
+            }
+        }
+
+        public string SelectedEmployee
+        {
+            get
+            {
+                return listBoxEmployees.SelectedValue as string;
+            }
+
+            set
+            {
+                listBoxEmployees.SelectedValue = value;
+            }
+        }
+        #endregion
+
+        private IPresenter p;
+
         public EditDeportmant()
         {
             InitializeComponent();
         }
-
-        private void btnAddEmployee_Click(object sender, RoutedEventArgs e)
+        public EditDeportmant(IModel model)
         {
-            EditEmpoyee editEmpoyeeWindow = new EditEmpoyee();
-            var context = editEmpoyeeWindow.DataContext;
-            if (context is EditEmployeeViewModel)
-            {
-                var employeeVM = context as EditEmployeeViewModel;
-                var name = "Без имени";
-                var surname = "Без фамилии";
-                employeeVM.Employee = new Employee(name, surname);
-                employeeVM.EmployeeName = name;
-                employeeVM.EmployeeSurname = surname;
-            }
-            bool? result = editEmpoyeeWindow.ShowDialog();
+            InitializeComponent();
+            p = new DepartmentPresenter(this, model);
 
-            if (result.HasValue && result.Value)
-            {
-                if (editEmpoyeeWindow.DataContext is EditEmployeeViewModel)
-                {
-                    Employee employee = (editEmpoyeeWindow.DataContext as EditEmployeeViewModel).Employee;
-                    if (DataContext is EditDeportmentViewModel)
-                    {
-                        var temp = (DataContext as EditDeportmentViewModel);
-                        employee.ChangeDepartment(temp.Department);
-                        temp.AddEmployee(employee);
-                        temp.UpdateEmployees(employee);
-                    }
-                }
-            }
-        }
-
-        private void btnRemoveEmployee_Click(object sender, RoutedEventArgs e)
-        {
-            var value = listBoxEmployees.SelectedValue;
-            if (value is string)
-            {
-                (DataContext as EditDeportmentViewModel).RemoveEmployee((value as string));
-            }
-        }
-
-        private void btnEditEmployee_Click(object sender, RoutedEventArgs e)
-        {
-            EditEmpoyee editEmpoyeeWindow = new EditEmpoyee();
-            var context = editEmpoyeeWindow.DataContext;
-            if (context is EditEmployeeViewModel)
-            {
-                var employeeVM = context as EditEmployeeViewModel;
-                var value = listBoxEmployees.SelectedValue;
-                if (value is string && value != null)
-                {
-                    var name = value as string;
-                    if (DataContext is EditDeportmentViewModel)
-                    {
-                        employeeVM.Employee = (DataContext as EditDeportmentViewModel).GetEmployee(name);
-                    }
-                    bool? result = editEmpoyeeWindow.ShowDialog();
-                    if (result.HasValue && result.Value)
-                    {
-                        if (editEmpoyeeWindow.DataContext is EditEmployeeViewModel)
-                        {
-                            if (DataContext is EditDeportmentViewModel)
-                            {
-                                (DataContext as EditDeportmentViewModel).UpdateEmployees((editEmpoyeeWindow.DataContext as EditEmployeeViewModel).Employee);
-                            }
-                        }
-                    }
-                }
-            }
-            
-        }
-
-        private void btnSaveDepartment_Click(object sender, RoutedEventArgs e)
-        {
-            DialogResult = true;
-            Close();
-        }
-
-        private void btnCancelDepartment_Click(object sender, RoutedEventArgs e)
-        {
-            Close();
+            Loaded += (s, e) => { p.LoadData(); };
+            Closing += (s, e) => { p.SaveData(); };
+            btnAddEmployee.Click += (s, e) => { p.Show(); };
+            btnEditEmployee.Click += (s, e) => { p.Edit(); };
+            btnRemoveEmployee.Click += (s, e) => { p.Remove(); };
         }
     }
 }

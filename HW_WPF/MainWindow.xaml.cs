@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Linq;
 using System.Text;
 using System.Windows;
@@ -17,83 +18,62 @@ namespace HW_WPF
     /// <summary>
     /// Interaction logic for MainWindow.xaml
     /// </summary>
-    public partial class MainWindow : Window
+    public partial class MainWindow : Window, ICompanyView
     {
+        #region iCompanyView
+        public string CompanyName
+        {
+            get
+            {
+                return TextBoxCompany.Text;
+            }
+
+            set
+            {
+                TextBoxCompany.Text = value;
+            }
+        }
+
+        public List<string> Departments
+        {
+            get
+            {
+                return listBoxDepartments.ItemsSource as List<string>;
+            }
+            set
+            {
+                listBoxDepartments.ItemsSource = value;
+            }
+        }
+
+        public string SelectedDepartment
+        {
+            get
+            {
+                return listBoxDepartments.SelectedValue as string;
+            }
+
+            set
+            {
+                listBoxDepartments.SelectedValue = value;
+            }
+        }
+        #endregion
+
+        private IPresenter p;
+
         /// <summary>
         /// Конструктор по умолчанию
         /// </summary>
         public MainWindow()
         {
             InitializeComponent();
-        }
-
-        private void btnAddDepartment_Click(object sender, RoutedEventArgs e)
-        {
-            EditDeportmant editDeportmantWindow = new EditDeportmant();
-            var context = editDeportmantWindow.DataContext;
-            if (context is EditDeportmentViewModel)
-            {
-                var deportmentVM = context as EditDeportmentViewModel;
-                var name = "Новый департамент";
-                deportmentVM.Department = new Department(name);
-                deportmentVM.DepartmentName = name;
-            }
-            bool? result = editDeportmantWindow.ShowDialog();
-
-            if (result.HasValue && result.Value)
-            {
-                if (editDeportmantWindow.DataContext is EditDeportmentViewModel)
-                {
-                    Department departament = (editDeportmantWindow.DataContext as EditDeportmentViewModel).Department;
-                    if(DataContext is MainViewModel)
-                    {
-                        (DataContext as MainViewModel).AddDepartment(departament);
-                    }
-                }
-            }            
-        }
-
-        private void btnRemoveDepartment_Click(object sender, RoutedEventArgs e)
-        {
-            var value = listBoxDepartments.SelectedValue;
-            if (value is string)
-            {
-                (DataContext as MainViewModel).RemoveDepartment((value as string));
-            }
-
-        }
-
-        private void btnEditDepartment_Click(object sender, RoutedEventArgs e)
-        {
-            EditDeportmant editDeportmantWindow = new EditDeportmant();
-            var context = editDeportmantWindow.DataContext;
-            if (context is EditDeportmentViewModel)
-            {
-                var deportmentVM = context as EditDeportmentViewModel;
-                var value = listBoxDepartments.SelectedValue;
-                if (value is string && value != null)
-                {
-                    var name = value as string;
-                    if (DataContext is MainViewModel)
-                    {
-                        deportmentVM.Department = (DataContext as MainViewModel).GetDepartment(name);
-                    }
-                    deportmentVM.DepartmentName = name;
-
-                    bool? result = editDeportmantWindow.ShowDialog();
-                    if (result.HasValue && result.Value)
-                    {
-                        if (editDeportmantWindow.DataContext is EditDeportmentViewModel)
-                        {
-                            if (DataContext is MainViewModel)
-                            {
-                                (DataContext as MainViewModel).UpdateDepartments((editDeportmantWindow.DataContext as EditDeportmentViewModel).Department);
-                            }
-                        }
-                    }
-                }
-            }
-            
+            p = new CompanyPresenter(this);
+            Loaded += (s, e) => { p.LoadData(); };
+            Closing += (s, e) => { p.SaveData(); };
+            btnAddDepartment.Click += (s, e) => { p.Show(); };
+            btnEditDepartment.Click += (s, e) => { p.Edit(); };
+            btnRemoveDepartment.Click += (s, e) => { p.Remove(); };
         }
     }
 }

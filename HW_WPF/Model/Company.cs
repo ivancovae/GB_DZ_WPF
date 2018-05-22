@@ -1,56 +1,58 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 
 namespace HW_WPF
 {
     /// <summary>
     /// Класс карточки компании
     /// </summary>
-    class Company
+    class Company : IEnumerable<Department>
     {
-        private string _name;
+        #region Данные
         /// <summary>
         /// Свойство наименования компании
         /// </summary>
-        public string Name => _name.ToString();
+        public string Name { get; set; }
         private List<Department> _departments;
         /// <summary>
         /// Список департаментов компании
         /// </summary>
         public List<string> Departments => _departments.Select(e=>e.Name).ToList();
-        /// <summary>
-        /// Конструктор по умолчанию задает Без названия
-        /// </summary>
-        public Company() : this("Без названия") {}
+        #endregion
+
+        private Company() {}
         /// <summary>
         /// Конструктор создания карточки компании
         /// </summary>
-        /// <exception cref="ArgumentException">Исключение некорретного ввода Наименования</exception>
         /// <param name="name">Наименование</param>
         /// <param name="director">Директор</param>
         public Company(string name)
         {
-            if (name == null || name == "")
-                throw new ArgumentException($"Имя не должно быть пустым", "name");
-            _name = name;
+            Name = name;
             _departments = new List<Department>();
         }
         /// <summary>
+        /// Проверка наличия департамента
+        /// </summary>
+        /// <param name="department">Департамент</param>
+        /// <returns>Результат проверки</returns>
+        public bool CheckDepartment(Department department) => CheckDepartment(department.Name);
+        /// <summary>
+        /// Проверка наличия департамента
+        /// </summary>
+        /// <param name="name">Имя департамента</param>
+        /// <returns>Результат проверки</returns>
+        public bool CheckDepartment(string name) => _departments.Select(e => e)
+                                                                .Where(e => (e.Name == name))
+                                                                .Count() > 0;
+        /// <summary>
         /// Добавление департамента
         /// </summary>
-        /// <exception cref="ArgumentException">Исключение некорретного ввода Наименования</exception>
         /// <param name="name">Наименование</param>
         /// <returns>Успешность добавления true при успешном добавление, false при уже существующем департаменте</returns>
-        public bool AddNewDepartment(string name)
-        {
-            var department = new Department(name);
-            if (Departments.IndexOf(name) != -1)
-                return false;
-            _departments.Add(department);
-            return true;
-        }
+        public bool AddNewDepartment(string name) => AddNewDepartment(new Department(name));
         /// <summary>
         /// Добавление департамента
         /// </summary>
@@ -58,31 +60,17 @@ namespace HW_WPF
         /// <returns>Успешность добавления true при успешном добавление, false при уже существующем департаменте</returns>
         public bool AddNewDepartment(Department department)
         {
-            if (Departments.IndexOf(department.Name) != -1)
+            if (CheckDepartment(department))
                 return false;
             _departments.Add(department);
             return true;
-        }
-        /// <summary>
-        /// Переименование фирмы
-        /// </summary>
-        /// <param name="newName">Новое имя</param>
-        public void RenameCompany(string newName)
-        {
-            _name = newName;
         }
         /// <summary>
         /// Удаление департамента
         /// </summary>
         /// <param name="department">Департамент</param>
         /// <returns>Успешность удаления true при успешном удаление, false при не существующем департаменте</returns>
-        public bool RemoveDepartment(Department department)
-        {
-            if (Departments.IndexOf(department.Name) == -1)
-                return false;
-            _departments.Remove(department);
-            return true;
-        }
+        public bool RemoveDepartment(Department department) => RemoveDepartment(department.Name);
         /// <summary>
         /// Удаление департамента
         /// </summary>
@@ -91,10 +79,10 @@ namespace HW_WPF
         public bool RemoveDepartment(string department)
         {
             var list = _departments.Select(e => e)
-                                   .Where(e => e.Name == department).ToList();
+                                   .Where(e => e.Name == department)
+                                   .ToList();
             if (list.Count == 0)
                 return false;
-
             _departments.Remove(list.First());
             return true;
         }
@@ -116,16 +104,29 @@ namespace HW_WPF
         /// </summary>
         /// <param name="department">департамент с изменениями</param>
         /// <returns>успешность замены, true если успех, false если депортамента нет</returns>
-        public bool UpdateDepartment(Department department)
+        public bool UpdateDepartment(string oldName, Department department)
         {
             var list = _departments.Select(e => e)
-                                   .Where(e => e.Name == department.Name).ToList();
+                                   .Where(e => e.Name == oldName).ToList();
             if (list.Count == 0)
                 return false;
 
             _departments.Remove(list.First());
             _departments.Add(department);
             return true;
+        }
+
+        public IEnumerator<Department> GetEnumerator()
+        {
+            foreach (var department in _departments)
+            {
+                yield return department as Department;
+            }
+        }
+
+        IEnumerator IEnumerable.GetEnumerator()
+        {
+            return ((IEnumerable<Department>)_departments).GetEnumerator();
         }
     }
 }
