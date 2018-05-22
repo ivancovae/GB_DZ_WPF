@@ -12,6 +12,7 @@ namespace HW_WPF
         public string OldName => _oldName;
         private string _oldName;
         private string _employeeName;
+        private WeakReference _owner = new WeakReference(null, false);
 
         public EmployeeModel(string employeeName)
         {
@@ -30,12 +31,18 @@ namespace HW_WPF
                 DepartmentModel temp = model as DepartmentModel;
                 _employee = temp.Department.GetEmployee(_employeeName);
                 _oldName = _employeeName;
+                _owner = new WeakReference(temp, false);
             }
+        }
+
+        public List<string> GetDepartments()
+        {
+            return (_owner.Target as DepartmentModel).GetDepartments();
         }
 
         public void SaveModel(IModel model)
         {
-            model.SaveModel(this);
+            (_owner.Target as DepartmentModel).SaveModel(this);
         }
     }
 }

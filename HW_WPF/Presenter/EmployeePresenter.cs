@@ -26,11 +26,15 @@ namespace HW_WPF
             _employeeView.EmployeeAge = temp.Employee.Age.ToString();
             _employeeView.EmployeeSalary = temp.Employee.Salary.ToString();
             _employeeView.EmployeeDepartment = temp.Employee.Department.Name;
+            _employeeView.Deportments = temp.GetDepartments();
         }
 
         public void SaveData()
         {
-            
+            EmployeeModel temp = _model as EmployeeModel;
+            temp.Employee.Name = _employeeView.EmployeeName;
+            temp.Employee.Age = Convert.ToInt32(_employeeView.EmployeeAge);
+            temp.Employee.Salary = Convert.ToInt32(_employeeView.EmployeeSalary);
         }
 
         public void Show()

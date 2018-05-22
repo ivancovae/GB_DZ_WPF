@@ -39,7 +39,8 @@ namespace HW_WPF
 
         public void SaveData()
         {
-            _model.SaveModel(null);
+            DepartmentModel temp = _model as DepartmentModel;
+            temp.Department.Name = _departmentView.DepartmentName;
         }
 
         public void Show()
