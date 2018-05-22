@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 
-namespace HW_WPF.Model
+namespace HW_WPF
 {
     class EmployeeModel : IModel
     {
@@ -16,6 +16,11 @@ namespace HW_WPF.Model
         public EmployeeModel(string employeeName)
         {
             _employeeName = employeeName;
+        }
+        public void NewModel()
+        {
+            _employee = new Employee(_employeeName, 0, 0);
+            _oldName = _employeeName;
         }
 
         public void LoadModel(IModel model)
@@ -30,10 +35,7 @@ namespace HW_WPF.Model
 
         public void SaveModel(IModel model)
         {
-            if (model is CompanyModel)
-            {
-                CompanyModel temp = model as CompanyModel;
-            }
+            model.SaveModel(this);
         }
     }
 }

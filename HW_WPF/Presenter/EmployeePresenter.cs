@@ -21,7 +21,11 @@ namespace HW_WPF
 
         public void LoadData()
         {
-            
+            EmployeeModel temp = _model as EmployeeModel;
+            _employeeView.EmployeeName = temp.Employee.Name;
+            _employeeView.EmployeeAge = temp.Employee.Age.ToString();
+            _employeeView.EmployeeSalary = temp.Employee.Salary.ToString();
+            _employeeView.EmployeeDepartment = temp.Employee.Department.Name;
         }
 
         public void SaveData()

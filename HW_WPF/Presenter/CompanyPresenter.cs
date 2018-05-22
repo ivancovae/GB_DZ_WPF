@@ -9,7 +9,6 @@ namespace HW_WPF
     {
         private IModel _model;
         private ICompanyView _companyView;
-        private IPresenter _presenterDepartment;
 
         public CompanyPresenter(ICompanyView view)
         {
@@ -25,16 +24,21 @@ namespace HW_WPF
             _companyView.Departments = temp.Company.Departments;
         }
 
-        public void Show()
+        private void OpenEditWindow(DepartmentModel dm)
         {
-            DepartmentModel md = new DepartmentModel(_companyView.SelectedDepartment);
-            md.LoadModel(_model);
-            EditDeportmant editDeportmantWindow = new EditDeportmant(md);
+            EditDeportmant editDeportmantWindow = new EditDeportmant(dm);
             var result = editDeportmantWindow.ShowDialog();
             if (result.HasValue && result.Value)
             {
-                md.SaveModel(_model);
+                dm.SaveModel(_model);
             }
+        }
+
+        public void Show()
+        {
+            DepartmentModel dm = new DepartmentModel("Новый департамент");
+            dm.NewModel();
+            OpenEditWindow(dm);
         }
         public void Hide()
         {
@@ -52,14 +56,9 @@ namespace HW_WPF
 
         public void Edit()
         {
-            DepartmentModel md = new DepartmentModel(_companyView.SelectedDepartment);
-            md.LoadModel(_model);
-            EditDeportmant editDeportmantWindow = new EditDeportmant(md);
-            var result = editDeportmantWindow.ShowDialog();
-            if (result.HasValue && result.Value)
-            {
-                md.SaveModel(_model);
-            }
+            DepartmentModel dm = new DepartmentModel(_companyView.SelectedDepartment);
+            dm.LoadModel(_model);
+            OpenEditWindow(dm);
         }
     }
 }

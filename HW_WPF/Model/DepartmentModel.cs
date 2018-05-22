@@ -27,13 +27,20 @@ namespace HW_WPF
                 _oldName = _departmentName;
             }
         }
+        public void NewModel()
+        {
+            _department = new Department(_departmentName);
+            _oldName = _departmentName;
+        }
 
         public void SaveModel(IModel model)
         {
-            if (model is CompanyModel)
+            if (model is EmployeeModel)
             {
-                CompanyModel temp = model as CompanyModel;
-
+                EmployeeModel md = model as EmployeeModel;
+                var name = md.Employee.Name;
+                _department.UpdateEmployee(md.OldName, md.Employee);
+                model.SaveModel(this);
             }
         }
     }

@@ -18,6 +18,7 @@ namespace HW_WPF
     /// </summary>
     public partial class EditEmpoyee : Window, IEmployeeView
     {
+        #region IEmployeeView
         public string EmployeeName
         {
             get
@@ -82,6 +83,9 @@ namespace HW_WPF
                 comboBoxEmployeeDepartment.SelectedValue = value; 
             }
         }
+        #endregion
+
+        private IPresenter p;
 
         /// <summary>
         /// Конструктор по уполчанию
@@ -90,16 +94,21 @@ namespace HW_WPF
         {
             InitializeComponent();
         }
-
-        private void btnSaveEmployee_Click(object sender, RoutedEventArgs e)
+        public EditEmpoyee(IModel model)
         {
-            DialogResult = true;
-            Close();
-        }
+            InitializeComponent();
+            p = new EmployeePresenter(this, model);
 
-        private void btnCancelEmployee_Click(object sender, RoutedEventArgs e)
-        {
-            Close();
+            Loaded += (s, e) => { p.LoadData(); };
+            Closing += (s, e) => { p.SaveData(); };
+            btnSaveEmployee.Click += (s, e) => {
+                p.SaveData();
+                DialogResult = true;
+                Close();
+            };
+            btnCancelEmployee.Click += (s, e) => {
+                Close();
+            };
         }
     }
 }

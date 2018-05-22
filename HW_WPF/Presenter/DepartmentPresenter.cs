@@ -9,12 +9,20 @@ namespace HW_WPF
     {
         private IModel _model;
         private IDepartmentView _departmentView;
-        private IPresenter _presenterEmployee;
 
         public DepartmentPresenter(IDepartmentView view, IModel model)
         {
             _departmentView = view;
             _model = model;
+        }
+        private void OpenEditWindow(EmployeeModel em)
+        {
+            EditEmpoyee editEmployeeWindow = new EditEmpoyee(em);
+            var result = editEmployeeWindow.ShowDialog();
+            if (result.HasValue && result.Value)
+            {
+                em.SaveModel(_model);
+            }
         }
 
         public void Hide()
@@ -31,12 +39,14 @@ namespace HW_WPF
 
         public void SaveData()
         {
-            
+            _model.SaveModel(null);
         }
 
         public void Show()
         {
-            
+            EmployeeModel em = new EmployeeModel(_departmentView.SelectedEmployee);
+            em.NewModel();
+            OpenEditWindow(em);
         }
 
         public void Remove()
@@ -46,7 +56,9 @@ namespace HW_WPF
 
         public void Edit()
         {
-            
+            EmployeeModel em = new EmployeeModel(_departmentView.SelectedEmployee);
+            em.LoadModel(_model);
+            OpenEditWindow(em);
         }
     }
 }

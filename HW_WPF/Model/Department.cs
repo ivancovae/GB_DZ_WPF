@@ -86,6 +86,17 @@ namespace HW_WPF
                 return null;
             return list.First();
         }
+        public bool UpdateEmployee(string oldName, Employee employee)
+        {
+            var list = _employees.Select(e => e)
+                                   .Where(e => e.Name == oldName).ToList();
+            if (list.Count == 0)
+                return false;
+
+            _employees.Remove(list.First());
+            _employees.Add(employee);
+            return true;
+        }
 
         public IEnumerator<Employee> GetEnumerator()
         {

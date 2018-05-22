@@ -70,7 +70,7 @@ namespace HW_WPF
 
         public void SaveModel(IModel model)
         {
-            if (model is DepartmentModel)
+            if (model != null && model is DepartmentModel)
             {
                 DepartmentModel md = model as DepartmentModel;
                 var name = md.Department.Name;
