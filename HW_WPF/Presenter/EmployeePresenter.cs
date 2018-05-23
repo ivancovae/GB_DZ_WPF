@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Linq;
 
 namespace HW_WPF
 {
@@ -49,7 +50,18 @@ namespace HW_WPF
             temp.Employee.Age = Convert.ToInt32(_employeeView.EmployeeAge);
             temp.Employee.Salary = Convert.ToInt32(_employeeView.EmployeeSalary);
             temp.Remove(_employeeView.EmployeeName);
+
+            #region Проверка дубля при смене департамента
+            // Проверка на возможность добавления в новый департамент, если нельзя уже есть сотрудник с таким именем, то менять имя добавляя 0 в конце
             var department = temp.GetDepartment(_employeeView.EmployeeDepartment);
+            while(department.Employees.Select(e => e)
+                                      .Where(e => e == temp.Employee.Name)
+                                      .Count() > 0)
+            {
+                temp.Employee.Name += "0";
+            }
+            #endregion
+
             temp.Employee.ChangeDepartment(department);
             department.AddNewEmployee(temp.Employee);
         }
