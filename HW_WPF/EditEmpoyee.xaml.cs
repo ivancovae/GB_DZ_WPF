@@ -100,14 +100,9 @@ namespace HW_WPF
             p = new EmployeePresenter(this, model);
 
             Loaded += (s, e) => { p.LoadData(); };
-            Closing += (s, e) => { p.SaveData(); };
-            btnSaveEmployee.Click += (s, e) => {
+            Closing += (s, e) => {
                 p.SaveData();
                 DialogResult = true;
-                Close();
-            };
-            btnCancelEmployee.Click += (s, e) => {
-                Close();
             };
         }
     }

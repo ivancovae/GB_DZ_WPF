@@ -16,48 +16,57 @@ namespace HW_WPF
 
         public void LoadData()
         {
-            StreamReader reader = File.OpenText(_fileName);
-            string streamContents = reader.ReadToEnd();
-            XDocument xDoc = XDocument.Parse(streamContents);
-            XElement xCompany = xDoc.Element("Company");
-            XAttribute nameCompany = xCompany.Attribute("Name");
-            _company = new Company(nameCompany.Value);
-
-            foreach (XElement xDepartment in xCompany.Elements("Department"))
+            using (StreamReader reader = File.OpenText(_fileName))
             {
-                XAttribute nameDepartment = xDepartment.Attribute("Name");
-                Department department = new Department(nameDepartment.Value);
-                foreach (XElement xEmployee in xDepartment.Elements("Employee"))
+                string streamContents = reader.ReadToEnd();
+                XDocument xDoc = XDocument.Parse(streamContents);
+                XElement xCompany = xDoc.Element("Company");
+                XAttribute nameCompany = xCompany.Attribute("Name");
+                _company = new Company(nameCompany.Value);
+
+                foreach (XElement xDepartment in xCompany.Elements("Department"))
                 {
-                    XAttribute nameEmployee = xEmployee.Attribute("Name");
-                    XAttribute ageEmployee = xEmployee.Attribute("Age");
-                    XAttribute salaryEmployee = xEmployee.Attribute("Salary");
-                    Employee employee = new Employee(nameEmployee.Value, Convert.ToInt32(ageEmployee.Value), Convert.ToInt32(salaryEmployee.Value));
-                    department.AddNewEmployee(employee);
+                    XAttribute nameDepartment = xDepartment.Attribute("Name");
+                    Department department = new Department(nameDepartment.Value);
+                    foreach (XElement xEmployee in xDepartment.Elements("Employee"))
+                    {
+                        XAttribute nameEmployee = xEmployee.Attribute("Name");
+                        XAttribute ageEmployee = xEmployee.Attribute("Age");
+                        XAttribute salaryEmployee = xEmployee.Attribute("Salary");
+                        Employee employee = new Employee(nameEmployee.Value, Convert.ToInt32(ageEmployee.Value), Convert.ToInt32(salaryEmployee.Value));
+                        department.AddNewEmployee(employee);
+                    }
+                    _company.AddNewDepartment(department);
                 }
-                _company.AddNewDepartment(department);
             }
         }
 
         public void SaveData()
         {
-            XDocument xDoc = XDocument.Load(_fileName);
-            XElement xCompany = xDoc.Element("Company");
-            xCompany.Attribute("Name").Value = _company.Name;
+            XDocument xDoc = new XDocument();
+            XElement xCompany = new XElement("Company");
+            XAttribute xCompanyNameAttr = new XAttribute("Name", _company.Name);
+            xCompany.Add(xCompanyNameAttr);
 
-            foreach (XElement xDepartment in xCompany.Elements())
+            foreach (var department in _company)
             {
-                var department = _company.GetDepartment(xDepartment.Attribute("Name").Value);
-                xDepartment.Attribute("Name").Value = department.Name;
-                foreach (XElement xEmployee in xDepartment.Elements())
+                XElement xDepartment = new XElement("Department");
+                XAttribute xDepartmentNameAttr = new XAttribute("Name", department.Name);
+                xDepartment.Add(xDepartmentNameAttr);
+                foreach (var employee in department)
                 {
-                    var employee = department.GetEmployee(xEmployee.Attribute("Name").Value);
-                    xEmployee.Attribute("Name").Value = employee.Name;
-                    xEmployee.Attribute("Age").Value = employee.Age.ToString();
-                    xEmployee.Attribute("Salary").Value = employee.Salary.ToString();
-                    xEmployee.Attribute("Department").Value = employee.Department.Name;
+                    XElement xEmployee = new XElement("Employee");
+                    XAttribute xEmployeeNameAttr = new XAttribute("Name", employee.Name);
+                    XAttribute xEmployeeAgeAttr = new XAttribute("Age", employee.Age.ToString());
+                    XAttribute xEmployeeSalaryAttr = new XAttribute("Salary", employee.Salary.ToString());
+                    xEmployee.Add(xEmployeeNameAttr);
+                    xEmployee.Add(xEmployeeAgeAttr);
+                    xEmployee.Add(xEmployeeSalaryAttr);
+                    xDepartment.Add(xEmployee);
                 }
+                xCompany.Add(xDepartment);
             }
+            xDoc.Add(xCompany);
             xDoc.Save(_fileName);                        
         }
 

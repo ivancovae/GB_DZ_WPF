@@ -53,6 +53,7 @@ namespace HW_WPF
         {
             CompanyModel temp = _model as CompanyModel;
             temp.Company.Name = _companyView.CompanyName;
+            _model.SaveModel(null);
         }
 
         public void Edit()
