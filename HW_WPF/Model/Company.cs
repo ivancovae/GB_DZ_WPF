@@ -1,5 +1,4 @@
-﻿using System;
-using System.Collections;
+﻿using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 
@@ -115,7 +114,10 @@ namespace HW_WPF
             _departments.Add(department);
             return true;
         }
-
+        /// <summary>
+        /// Реализация IEnumerator
+        /// </summary>
+        /// <returns>Элемент коллекции</returns>
         public IEnumerator<Department> GetEnumerator()
         {
             foreach (var department in _departments)
@@ -123,7 +125,6 @@ namespace HW_WPF
                 yield return department as Department;
             }
         }
-
         IEnumerator IEnumerable.GetEnumerator()
         {
             return ((IEnumerable<Department>)_departments).GetEnumerator();

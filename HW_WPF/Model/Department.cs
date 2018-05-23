@@ -1,5 +1,4 @@
-﻿using System;
-using System.Collections;
+﻿using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 
@@ -86,6 +85,12 @@ namespace HW_WPF
                 return null;
             return list.First();
         }
+        /// <summary>
+        /// Обновление сотрудника по старому имени и новому объекту
+        /// </summary>
+        /// <param name="oldName">Имя до изменения</param>
+        /// <param name="employee">Новый объект изменения</param>
+        /// <returns>успешность выполнения операции</returns>
         public bool UpdateEmployee(string oldName, Employee employee)
         {
             var list = _employees.Select(e => e)
@@ -97,7 +102,10 @@ namespace HW_WPF
             _employees.Add(employee);
             return true;
         }
-
+        /// <summary>
+        /// Реализация IEnumerator
+        /// </summary>
+        /// <returns>Элемент коллекции</returns>
         public IEnumerator<Employee> GetEnumerator()
         {
             foreach(var employee in _employees)

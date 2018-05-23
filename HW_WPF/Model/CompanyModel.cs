@@ -4,16 +4,28 @@ using System.IO;
 
 namespace HW_WPF
 {
+    /// <summary>
+    /// Класс модели работы с сущностью Карточка компании
+    /// </summary>
     class CompanyModel : IModel
     {
         private Company _company;
+        /// <summary>
+        /// Свойство имени компании
+        /// </summary>
         public Company Company => _company;
         private readonly string _fileName;
+        /// <summary>
+        /// Конструктор с параментрами и со значением по умолчанию
+        /// </summary>
+        /// <param name="fileName">имя файла базы или по умолчанию base.db</param>
         public CompanyModel(string fileName = "base.db")
         {
             _fileName = fileName;
         }
-
+        /// <summary>
+        /// Загрузка данных модели
+        /// </summary>
         public void LoadData()
         {
             using (StreamReader reader = File.OpenText(_fileName))
@@ -40,7 +52,9 @@ namespace HW_WPF
                 }
             }
         }
-
+        /// <summary>
+        /// Сохранение данных модели
+        /// </summary>
         public void SaveData()
         {
             XDocument xDoc = new XDocument();
@@ -69,17 +83,27 @@ namespace HW_WPF
             xDoc.Add(xCompany);
             xDoc.Save(_fileName);                        
         }
-
+        /// <summary>
+        /// Реализация интерфейса по сквозному сохранению модели
+        /// </summary>
+        /// <param name="model">Модель "родительского" уровня или null</param>
         public void SaveModel(IModel model)
         {
             SaveData();
         }
 
+        /// <summary>
+        /// Реализация интерфейса по сквозной загрузке модели
+        /// </summary>
+        /// <param name="model">Модель "родительского" уровня</param>
         public void LoadModel(IModel model)
         {
             LoadData();
         }
-
+        /// <summary>
+        /// Удаление записи в модели
+        /// </summary>
+        /// <param name="name">Имя записи</param>
         public void Remove(string name)
         {
             _company.RemoveDepartment(name);
