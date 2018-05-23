@@ -31,7 +31,7 @@
         <TextBox x:Name="textBoxEmployeeSalary" Grid.Row="3" Grid.Column="1" Margin="5" HorizontalContentAlignment="Center"/>
         <Label x:Name="labelEmployeeDepartment" Grid.Row="4" Grid.Column="0" Content="Департамент" Margin="5" HorizontalContentAlignment="Center"/>
         <ComboBox x:Name="comboBoxEmployeeDepartment" Grid.Row="4" Grid.Column="1" Margin="5" HorizontalContentAlignment="Center"/>
-        <Button x:Name="btnSaveEmployee" Grid.Row="5" Grid.Column="0" Content="Сохранить" Margin="5" HorizontalContentAlignment="Center"/>
-        <Button x:Name="btnCancelEmployee" Grid.Row="5" Grid.Column="1" Content="Отменить" Margin="5" HorizontalContentAlignment="Center"/>
+        <Button x:Name="btnSaveEmployee" Grid.Row="5" Grid.Column="0" Content="Сохранить" Margin="5" HorizontalContentAlignment="Center" Height="40"/>
+        <Button x:Name="btnCancelEmployee" Grid.Row="5" Grid.Column="1" Content="Отменить" Margin="5" HorizontalContentAlignment="Center" Height="40"/>
     </Grid>
 </Window>

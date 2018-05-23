@@ -41,13 +41,7 @@ namespace HW_WPF
 
         public void SaveModel(IModel model)
         {
-            if (model is EmployeeModel)
-            {
-                EmployeeModel md = model as EmployeeModel;
-                var name = md.Employee.Name;
-                _department.UpdateEmployee(md.OldName, md.Employee);
-                (_owner.Target as CompanyModel).SaveModel(this);
-            }
+            (_owner.Target as CompanyModel).SaveModel(this);
         }
     }
 }

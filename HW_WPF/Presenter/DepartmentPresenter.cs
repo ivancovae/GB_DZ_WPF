@@ -21,7 +21,7 @@ namespace HW_WPF
             var result = editEmployeeWindow.ShowDialog();
             if (result.HasValue && result.Value)
             {
-                em.SaveModel(_model);
+                LoadData();
             }
         }
 

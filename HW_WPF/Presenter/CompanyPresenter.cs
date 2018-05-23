@@ -14,11 +14,11 @@ namespace HW_WPF
         {
             _companyView = view;
             _model = new CompanyModel();
+            _model.LoadModel(null);
         }
 
         public void LoadData()
         {
-            _model.LoadModel(null);
             CompanyModel temp = _model as CompanyModel;
             _companyView.CompanyName = temp.Company.Name;
             _companyView.Departments = temp.Company.Departments;
@@ -30,7 +30,7 @@ namespace HW_WPF
             var result = editDeportmantWindow.ShowDialog();
             if (result.HasValue && result.Value)
             {
-                dm.SaveModel(_model);
+                LoadData();
             }
         }
 

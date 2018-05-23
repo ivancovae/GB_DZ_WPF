@@ -41,41 +41,28 @@ namespace HW_WPF
 
         public void SaveData()
         {
-            XDocument xDoc = new XDocument();
-            XElement xCompany = new XElement("Company");
-            XAttribute xNameCompany = new XAttribute("Name", _company.Name);
-            xCompany.Add(xNameCompany);
+            XDocument xDoc = XDocument.Load(_fileName);
+            XElement xCompany = xDoc.Element("Company");
+            xCompany.Attribute("Name").Value = _company.Name;
 
-            foreach(var department in _company)
+            foreach (XElement xDepartment in xCompany.Elements())
             {
-                XElement xDepartment = new XElement("Department");
-                XAttribute xNameDepartment = new XAttribute("Name", department.Name);
-
-                foreach(var employee in department)
+                var department = _company.GetDepartment(xDepartment.Attribute("Name").Value);
+                xDepartment.Attribute("Name").Value = department.Name;
+                foreach (XElement xEmployee in xDepartment.Elements())
                 {
-                    XElement xEmployee = new XElement("Employee");
-                    XAttribute xNameEmployee = new XAttribute("Name", employee.Name);
-                    XAttribute xAgeEmployee = new XAttribute("Age", employee.Age);
-                    XAttribute xSalaryEmployee = new XAttribute("Salary", employee.Salary);
-                    xEmployee.Add(xNameEmployee);
-                    xEmployee.Add(xAgeEmployee);
-                    xEmployee.Add(xSalaryEmployee);
-                    xDepartment.Add(xEmployee);
+                    var employee = department.GetEmployee(xEmployee.Attribute("Name").Value);
+                    xEmployee.Attribute("Name").Value = employee.Name;
+                    xEmployee.Attribute("Age").Value = employee.Age.ToString();
+                    xEmployee.Attribute("Salary").Value = employee.Salary.ToString();
+                    xEmployee.Attribute("Department").Value = employee.Department.Name;
                 }
-                xDepartment.Add(xNameDepartment);
-                xCompany.Add(xDepartment);
             }
             xDoc.Save(_fileName);                        
         }
 
         public void SaveModel(IModel model)
         {
-            if (model != null && model is DepartmentModel)
-            {
-                DepartmentModel md = model as DepartmentModel;
-                var name = md.Department.Name;
-                _company.UpdateDepartment(md.OldName, md.Department);
-            }
             SaveData();
         }
 

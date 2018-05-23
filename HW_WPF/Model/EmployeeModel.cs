@@ -11,17 +11,15 @@ namespace HW_WPF
         public Employee Employee => _employee;
         public string OldName => _oldName;
         private string _oldName;
-        private string _employeeName;
         private WeakReference _owner = new WeakReference(null, false);
 
         public EmployeeModel(string employeeName)
         {
-            _employeeName = employeeName;
+            _oldName = employeeName;
         }
         public void NewModel()
         {
-            _employee = new Employee(_employeeName, 0, 0);
-            _oldName = _employeeName;
+            _employee = new Employee(_oldName, 0, 0);
         }
 
         public void LoadModel(IModel model)
@@ -29,8 +27,7 @@ namespace HW_WPF
             if (model is DepartmentModel)
             {
                 DepartmentModel temp = model as DepartmentModel;
-                _employee = temp.Department.GetEmployee(_employeeName);
-                _oldName = _employeeName;
+                _employee = temp.Department.GetEmployee(_oldName);
                 _owner = new WeakReference(temp, false);
             }
         }
