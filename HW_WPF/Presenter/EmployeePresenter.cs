@@ -48,7 +48,10 @@ namespace HW_WPF
             temp.Employee.Name = _employeeView.EmployeeName;
             temp.Employee.Age = Convert.ToInt32(_employeeView.EmployeeAge);
             temp.Employee.Salary = Convert.ToInt32(_employeeView.EmployeeSalary);
-            temp.Employee.Department.Name = _employeeView.EmployeeDepartment;
+            temp.Remove(_employeeView.EmployeeName);
+            var department = temp.GetDepartment(_employeeView.EmployeeDepartment);
+            temp.Employee.ChangeDepartment(department);
+            department.AddNewEmployee(temp.Employee);
         }
         /// <summary>
         /// Создание нового окна редактирования, дочерняя цепочка MVP, для цепочки Департаментов

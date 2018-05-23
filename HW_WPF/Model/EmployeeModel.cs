@@ -64,6 +64,14 @@ namespace HW_WPF
             return (_owner.Target as DepartmentModel).GetDepartments();
         }
         /// <summary>
+        /// Департамент по имени
+        /// </summary>
+        /// <returns>список департаментов</returns>
+        public Department GetDepartment(string name)
+        {
+            return (_owner.Target as DepartmentModel).GetDepartment(name);
+        }
+        /// <summary>
         /// Реализация интерфейса по сквозному сохранению модели
         /// </summary>
         /// <param name="model">Модель "родительского" уровня или null</param>
@@ -77,7 +85,7 @@ namespace HW_WPF
         /// <param name="name">Имя записи</param>
         public void Remove(string name)
         {
-            
+            (_owner.Target as DepartmentModel).Remove(name);
         }
     }
 }

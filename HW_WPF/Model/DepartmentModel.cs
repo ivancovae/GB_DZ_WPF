@@ -82,5 +82,13 @@ namespace HW_WPF
         {
             _department.RemoveEmployee(name);
         }
+        /// <summary>
+        /// Департамент по имени
+        /// </summary>
+        /// <returns>список департаментов</returns>
+        public Department GetDepartment(string name)
+        {
+            return (_owner.Target as CompanyModel).Company.GetDepartment(name);
+        }
     }
 }
