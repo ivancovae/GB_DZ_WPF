@@ -46,13 +46,14 @@ namespace HW_WPF
         public void Show()
         {
             EmployeeModel em = new EmployeeModel(_departmentView.SelectedEmployee);
-            em.NewModel();
+            em.NewModel(_model);
             OpenEditWindow(em);
         }
 
         public void Remove()
         {
-            
+            _model.Remove(_departmentView.SelectedEmployee);
+            LoadData();
         }
 
         public void Edit()

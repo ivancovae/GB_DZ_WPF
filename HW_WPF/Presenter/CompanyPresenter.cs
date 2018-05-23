@@ -37,7 +37,7 @@ namespace HW_WPF
         public void Show()
         {
             DepartmentModel dm = new DepartmentModel("Новый департамент");
-            dm.NewModel();
+            dm.NewModel(_model);
             OpenEditWindow(dm);
         }
         public void Hide()
@@ -46,7 +46,8 @@ namespace HW_WPF
         }
         public void Remove()
         {
-
+            _model.Remove(_companyView.SelectedDepartment);
+            LoadData();
         }
 
         public void SaveData()

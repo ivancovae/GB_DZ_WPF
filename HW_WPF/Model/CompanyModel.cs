@@ -79,5 +79,10 @@ namespace HW_WPF
         {
             LoadData();
         }
+
+        public void Remove(string name)
+        {
+            _company.RemoveDepartment(name);
+        }
     }
 }

@@ -17,9 +17,16 @@ namespace HW_WPF
         {
             _oldName = employeeName;
         }
-        public void NewModel()
+        public void NewModel(IModel model)
         {
-            _employee = new Employee(_oldName, 0, 0);
+            
+            if (model is DepartmentModel)
+            {
+                DepartmentModel temp = model as DepartmentModel;
+                _employee = new Employee(_oldName, 0, 0);
+                temp.Department.AddNewEmployee(_employee);
+                _owner = new WeakReference(temp, false);
+            }
         }
 
         public void LoadModel(IModel model)
@@ -40,6 +47,11 @@ namespace HW_WPF
         public void SaveModel(IModel model)
         {
             (_owner.Target as DepartmentModel).SaveModel(this);
+        }
+
+        public void Remove(string name)
+        {
+            
         }
     }
 }

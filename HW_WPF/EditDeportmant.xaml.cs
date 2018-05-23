@@ -71,7 +71,10 @@ namespace HW_WPF
             p = new DepartmentPresenter(this, model);
 
             Loaded += (s, e) => { p.LoadData(); };
-            Closing += (s, e) => { p.SaveData(); };
+            Closing += (s, e) => {
+                p.SaveData();
+                DialogResult = true;
+            };
             btnAddEmployee.Click += (s, e) => { p.Show(); };
             btnEditEmployee.Click += (s, e) => { p.Edit(); };
             btnRemoveEmployee.Click += (s, e) => { p.Remove(); };

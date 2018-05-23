@@ -9,5 +9,7 @@ namespace HW_WPF
     {
         void SaveModel(IModel model);
         void LoadModel(IModel model);
+
+        void Remove(string name);
     }
 }
