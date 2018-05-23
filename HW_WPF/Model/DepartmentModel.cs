@@ -52,9 +52,14 @@ namespace HW_WPF
             {
                 CompanyModel temp = model as CompanyModel;
                 Department department = new Department(_departmentName);
-                temp.Company.AddNewDepartment(department);
-                _department = department;
                 _oldName = _departmentName;
+                while (!temp.Company.AddNewDepartment(department))
+                {
+                    _oldName = _oldName + "0";
+                    _departmentName = _oldName;
+                    department = new Department(_departmentName);
+                }
+                _department = department;
                 _owner = new WeakReference(temp, false);
             }
         }

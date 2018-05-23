@@ -33,12 +33,15 @@ namespace HW_WPF
         /// <param name="model">родительская модель</param>
         public void NewModel(IModel model)
         {
-            
             if (model is DepartmentModel)
             {
                 DepartmentModel temp = model as DepartmentModel;
                 _employee = new Employee(_oldName, 0, 0);
-                temp.Department.AddNewEmployee(_employee);
+                while(!temp.Department.AddNewEmployee(_employee))
+                {
+                    _oldName = _oldName + "0";
+                    _employee = new Employee(_oldName, 0, 0);
+                }                    
                 _owner = new WeakReference(temp, false);
             }
         }
