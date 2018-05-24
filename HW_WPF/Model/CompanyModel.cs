@@ -28,28 +28,43 @@ namespace HW_WPF
         /// </summary>
         public void LoadData()
         {
-            using (StreamReader reader = File.OpenText(_fileName))
+            try
             {
-                string streamContents = reader.ReadToEnd();
-                XDocument xDoc = XDocument.Parse(streamContents);
-                XElement xCompany = xDoc.Element("Company");
-                XAttribute nameCompany = xCompany.Attribute("Name");
-                _company = new Company(nameCompany.Value);
-
-                foreach (XElement xDepartment in xCompany.Elements("Department"))
+                using (StreamReader reader = File.OpenText(_fileName))
                 {
-                    XAttribute nameDepartment = xDepartment.Attribute("Name");
-                    Department department = new Department(nameDepartment.Value);
-                    foreach (XElement xEmployee in xDepartment.Elements("Employee"))
+                    string streamContents = reader.ReadToEnd();
+                    XDocument xDoc = XDocument.Parse(streamContents);
+                    XElement xCompany = xDoc.Element("Company");
+                    XAttribute nameCompany = xCompany.Attribute("Name");
+                    _company = new Company(nameCompany.Value);
+
+                    foreach (XElement xDepartment in xCompany.Elements("Department"))
                     {
-                        XAttribute nameEmployee = xEmployee.Attribute("Name");
-                        XAttribute ageEmployee = xEmployee.Attribute("Age");
-                        XAttribute salaryEmployee = xEmployee.Attribute("Salary");
-                        Employee employee = new Employee(nameEmployee.Value, Convert.ToInt32(ageEmployee.Value), Convert.ToInt32(salaryEmployee.Value));
-                        department.AddNewEmployee(employee);
+                        XAttribute nameDepartment = xDepartment.Attribute("Name");
+                        Department department = new Department(nameDepartment.Value);
+                        foreach (XElement xEmployee in xDepartment.Elements("Employee"))
+                        {
+                            XAttribute nameEmployee = xEmployee.Attribute("Name");
+                            XAttribute ageEmployee = xEmployee.Attribute("Age");
+                            XAttribute salaryEmployee = xEmployee.Attribute("Salary");
+                            Employee employee = new Employee(nameEmployee.Value, Convert.ToInt32(ageEmployee.Value), Convert.ToInt32(salaryEmployee.Value));
+                            department.AddNewEmployee(employee);
+                        }
+                        _company.AddNewDepartment(department);
                     }
-                    _company.AddNewDepartment(department);
                 }
+            }
+            catch (FileNotFoundException fnfe)
+            {
+                Console.WriteLine("Не найден файл базы" + Environment.NewLine + fnfe.Message + Environment.NewLine + fnfe.FileName);
+                Console.WriteLine("Будет создан пустой файл базы с именем: " + _fileName);
+                XDocument xDoc = new XDocument();
+                XElement xCompany = new XElement("Company");
+                XAttribute xCompanyNameAttr = new XAttribute("Name", "Компания без названия");
+                _company = new Company(xCompanyNameAttr.Value);
+                xCompany.Add(xCompanyNameAttr);
+                xDoc.Add(xCompany);
+                xDoc.Save(_fileName);
             }
         }
         /// <summary>
