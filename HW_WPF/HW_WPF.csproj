@@ -125,8 +125,11 @@
   </ItemGroup>
   <ItemGroup />
   <ItemGroup>
+    <Content Include="SQL\dbo.Company.data.sql" />
     <Content Include="SQL\dbo.Company.sql" />
+    <Content Include="SQL\dbo.Department.data.sql" />
     <Content Include="SQL\dbo.Department.sql" />
+    <Content Include="SQL\dbo.Employee.data.sql" />
     <Content Include="SQL\dbo.Employee.sql" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

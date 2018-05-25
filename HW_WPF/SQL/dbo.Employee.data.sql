@@ -1,4 +1,5 @@
-﻿INSERT INTO [dbo].[Employee] ([Id], [Name], [Age], [Salary], [DepartmentID], [CompanyID]) VALUES (1, N'Arley', 30, 30000, 1, 1)
+SET IDENTITY_INSERT [dbo].[Employee] ON
+INSERT INTO [dbo].[Employee] ([Id], [Name], [Age], [Salary], [DepartmentID], [CompanyID]) VALUES (1, N'Arley', 30, 30000, 1, 1)
 INSERT INTO [dbo].[Employee] ([Id], [Name], [Age], [Salary], [DepartmentID], [CompanyID]) VALUES (2, N'Addison', 31, 40000, 2, 1)
 INSERT INTO [dbo].[Employee] ([Id], [Name], [Age], [Salary], [DepartmentID], [CompanyID]) VALUES (3, N'Axton', 27, 27000, 1, 1)
 INSERT INTO [dbo].[Employee] ([Id], [Name], [Age], [Salary], [DepartmentID], [CompanyID]) VALUES (4, N'Baylor', 21, 23000, 3, 1)
@@ -11,3 +12,4 @@ INSERT INTO [dbo].[Employee] ([Id], [Name], [Age], [Salary], [DepartmentID], [Co
 INSERT INTO [dbo].[Employee] ([Id], [Name], [Age], [Salary], [DepartmentID], [CompanyID]) VALUES (11, N'Granger', 30, 46000, 6, 1)
 INSERT INTO [dbo].[Employee] ([Id], [Name], [Age], [Salary], [DepartmentID], [CompanyID]) VALUES (12, N'Hazelton', 24, 32000, 6, 1)
 INSERT INTO [dbo].[Employee] ([Id], [Name], [Age], [Salary], [DepartmentID], [CompanyID]) VALUES (13, N'Hilton', 19, 18000, 4, 1)
+SET IDENTITY_INSERT [dbo].[Employee] OFF
