@@ -10,98 +10,71 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
+using System.Data;
+using System.Data.SqlClient;
 
 namespace HW_WPF
 {
     /// <summary>
     /// Interaction logic for EditEmpoyee.xaml
     /// </summary>
-    public partial class EditEmpoyee : Window, IEmployeeView
+    public partial class EditEmpoyee : Window
     {
-        #region IEmployeeView
-        public string EmployeeName
+        private SqlConnection connection;
+        private SqlDataAdapter adapter;
+        private DataTable dt;
+
+        private void AddSelectCommand()
         {
-            get
-            {
-                return textBoxEmployeeName.Text;
-            }
-
-            set
-            {
-                textBoxEmployeeName.Text = value;
-            }
+            SqlCommand sqlCommand = new SqlCommand(@"SELECT Department.Id as DepartmentID, Department.Name as DepartmentName
+                                                        FROM Department 
+                                                        INNER JOIN Company 
+                                                        ON Department.CompanyID=Company.Id", connection);
+            adapter.SelectCommand = sqlCommand;
         }
-
-        public string EmployeeAge
-        {
-            get
-            {
-                return textBoxEmployeeAge.Text;
-            }
-
-            set
-            {
-                textBoxEmployeeAge.Text = value;
-            }
-        }
-
-        public string EmployeeSalary
-        {
-            get
-            {
-                return textBoxEmployeeSalary.Text;
-            }
-
-            set
-            {
-                textBoxEmployeeSalary.Text = value;
-            }
-        }
-
-        public List<string> Deportments
-        {
-            get
-            {
-                return comboBoxEmployeeDepartment.ItemsSource as List<string>;
-            }
-
-            set
-            {
-                comboBoxEmployeeDepartment.ItemsSource = value;
-            }
-        }
-
-        public string EmployeeDepartment
-        {
-            get
-            {
-                return comboBoxEmployeeDepartment.SelectedValue as string;
-            }
-
-            set
-            {
-                comboBoxEmployeeDepartment.SelectedValue = value; 
-            }
-        }
-        #endregion
-
-        private IPresenter p;
-
-        /// <summary>
-        /// Конструктор по уполчанию
-        /// </summary>
-        public EditEmpoyee()
+        //
+        // EmployeID, EmployeeName, EmployeeAge, EmployeeSalary, CompanyID, DepartmentID, DepartmentName 
+        //
+        public DataRow resultRow { get; set; }
+        public EditEmpoyee(SqlConnection sqlConnection, DataRow dataRow)
         {
             InitializeComponent();
-        }
-        public EditEmpoyee(IModel model)
-        {
-            InitializeComponent();
-            p = new EmployeePresenter(this, model);
+            resultRow = dataRow;
 
-            Loaded += (s, e) => { p.LoadData(); };
+            connection = sqlConnection;
+            adapter = new SqlDataAdapter();
+            AddSelectCommand();
+            dt = new DataTable();
+            adapter.Fill(dt);
+
+            Loaded += (s, e) => {
+                textBoxEmployeeName.Text = resultRow["EmployeeName"].ToString();
+                textBoxEmployeeAge.Text = resultRow["EmployeeAge"].ToString();
+                textBoxEmployeeSalary.Text = resultRow["EmployeeSalary"].ToString();
+                comboBoxEmployeeDepartment.ItemsSource = dt.DefaultView;
+                for (var i = 0; i < dt.DefaultView.Count; i++)
+                {
+                    DataRowView drv = dt.DefaultView[i];
+                    if (drv.Row["DepartmentName"].ToString() == resultRow["DepartmentName"].ToString())
+                    {
+                        comboBoxEmployeeDepartment.SelectedIndex = i;
+                        break;
+                    }
+                }                
+            };
             Closing += (s, e) => {
-                p.SaveData();
+
+            };
+            SaveEmployee.Click += (s, e) =>
+            {
+                resultRow["EmployeeName"] = textBoxEmployeeName.Text;
+                resultRow["EmployeeAge"] = textBoxEmployeeAge.Text;
+                resultRow["EmployeeSalary"] = textBoxEmployeeSalary.Text;
+                resultRow["DepartmentID"] = (comboBoxEmployeeDepartment.SelectedItem as DataRowView).Row["DepartmentID"];
+                DialogResult = true;
+            };
+            CancelEmployee.Click += (s, e) =>
+            {
                 DialogResult = true;
             };
         }

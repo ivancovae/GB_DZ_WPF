@@ -19,12 +19,12 @@
         }
         private void OpenEditWindow(EmployeeModel em)
         {
-            EditEmpoyee editEmployeeWindow = new EditEmpoyee(em);
-            var result = editEmployeeWindow.ShowDialog();
-            if (result.HasValue && result.Value)
-            {
-                LoadData();
-            }
+            //EditEmpoyee editEmployeeWindow = new EditEmpoyee(em);
+            //var result = editEmployeeWindow.ShowDialog();
+            //if (result.HasValue && result.Value)
+            //{
+            //    LoadData();
+            //}
         }
         /// <summary>
         /// Скрытие нового окна редактирования, дочерняя цепочка MVP, пока что не используется TO DO

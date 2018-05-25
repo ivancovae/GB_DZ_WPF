@@ -29,12 +29,12 @@
 
         private void OpenEditWindow(DepartmentModel dm)
         {
-            EditDeportmant editDeportmantWindow = new EditDeportmant(dm);
-            var result = editDeportmantWindow.ShowDialog();
-            if (result.HasValue && result.Value)
-            {
-                LoadData();
-            }
+            //EditDeportmant editDeportmantWindow = new EditDeportmant(dm);
+            //var result = editDeportmantWindow.ShowDialog();
+            //if (result.HasValue && result.Value)
+            //{
+            //    LoadData();
+            //}
         }
         /// <summary>
         /// Создание нового окна редактирования, дочерняя цепочка MVP, для цепочки Департаментов

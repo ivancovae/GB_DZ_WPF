@@ -20,8 +20,26 @@
         </Grid.ColumnDefinitions>
         <Label x:Name="labelTitleDepartment" Grid.Column="0" Grid.Row="0" Content="Департамент" Margin="5" HorizontalContentAlignment="Center"/>
         <TextBox x:Name="TextBoxDepartment" Grid.Column="1" Grid.Row="0" Margin="5"/>
-        <ListBox x:Name="listBoxEmployees"  Grid.Column="0" Grid.Row="1" Margin="5" SelectionMode="Single"/>
+
+        <DataGrid x:Name="EmployeesDataGrid" 
+                  Grid.Row="2" 
+                  Grid.ColumnSpan="1" 
+                  AutoGenerateColumns="False" 
+                  EnableRowVirtualization="True" 
+                  ItemsSource="{Binding}"
+                  Margin="5"
+                  IsReadOnly="True">
+            <DataGrid.Columns>
+                <DataGridTextColumn x:Name="nameColumn" 
+                                    Binding="{Binding EmployeeName}"
+                                    Header="Сотрудники" 
+                                    IsReadOnly="True" 
+                                    Width="*"/>
+            </DataGrid.Columns>
+        </DataGrid>
+
         <StackPanel Grid.Column="1" Grid.Row="2" Orientation="Vertical">
+            <Button x:Name="btnSaveEmployee" Content="Сохранить" VerticalAlignment="Center" HorizontalAlignment="Stretch" Margin="5" Height="40"/>
             <Button x:Name="btnAddEmployee" Content="Добавить" VerticalAlignment="Center" HorizontalAlignment="Stretch" Margin="5" Height="40"/>
             <Button x:Name="btnRemoveEmployee" Content="Удалить" VerticalAlignment="Center" HorizontalAlignment="Stretch" Margin="5" Height="40"/>
             <Button x:Name="btnEditEmployee" Content="Редактировать" VerticalAlignment="Center" HorizontalAlignment="Stretch" Margin="5" Height="40"/>

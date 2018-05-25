@@ -21,78 +21,113 @@ namespace HW_WPF
     /// <summary>
     /// Interaction logic for MainWindow.xaml
     /// </summary>
-    public partial class MainWindow : Window, ICompanyView
+    public partial class MainWindow : Window
     {
-        #region iCompanyView
-        public string CompanyName
+        private SqlConnection connection;
+        private SqlDataAdapter adapter;
+        private DataTable dt;
+
+        private void AddSelectCommand()
         {
-            get
-            {
-                return TextBoxCompany.Text;
-            }
-
-            set
-            {
-                TextBoxCompany.Text = value;
-            }
+            SqlCommand sqlCommand = new SqlCommand(@"SELECT Department.Name as DepartmentName, Company.Id as CompanyID, Company.Name as CompanyName, Department.Id as DepartmentID 
+                                                        FROM Company 
+                                                        INNER JOIN Department 
+                                                        ON Company.Id=Department.CompanyID 
+                                                        WHERE Company.Id=@ID", connection);
+            SqlParameter sqlParam = new SqlParameter("@ID", SqlDbType.Int, 0, "ID");
+            sqlParam.SourceVersion = DataRowVersion.Original;
+            sqlParam.Value = 1;
+            sqlCommand.Parameters.Add(sqlParam);
+            adapter.SelectCommand = sqlCommand;
         }
-
-        public List<string> Departments
+        private void AddInsertCommand()
         {
-            get
-            {
-                return listBoxDepartments.ItemsSource as List<string>;
-            }
-            set
-            {
-                listBoxDepartments.ItemsSource = value;
-            }
+            SqlCommand sqlCommand = new SqlCommand(@"INSERT INTO Department (Name, CompanyID) VALUES (@Name, @CompanyID); 
+                                                        SET @ID = @@IDENTITY;", connection);
+            sqlCommand.Parameters.Add("@Name", SqlDbType.NVarChar, -1, "DepartmentName");
+            sqlCommand.Parameters.Add("@CompanyID", SqlDbType.Int, 0, "CompanyID");
+            SqlParameter param = sqlCommand.Parameters.Add("@ID", SqlDbType.Int, 0, "DepartmentID");
+            param.Direction = ParameterDirection.Output;
+            adapter.InsertCommand = sqlCommand;
         }
-
-        public string SelectedDepartment
+        private void AddUpdateCommand()
         {
-            get
-            {
-                return listBoxDepartments.SelectedValue as string;
-            }
-
-            set
-            {
-                listBoxDepartments.SelectedValue = value;
-            }
+            SqlCommand sqlCommand = new SqlCommand(@"UPDATE Department SET Name = @Name, CompanyID = @CompanyID
+                                                        WHERE ID = @ID", connection);
+            sqlCommand.Parameters.Add("@Name", SqlDbType.NVarChar, -1, "DepartmentName");
+            sqlCommand.Parameters.Add("@CompanyID", SqlDbType.Int, 0, "CompanyID");
+            SqlParameter param = sqlCommand.Parameters.Add("@ID", SqlDbType.Int, 0, "DepartmentID");
+            param.SourceVersion = DataRowVersion.Original;
+            adapter.UpdateCommand = sqlCommand;
         }
-        #endregion
-
-        private IPresenter p;
-
+        private void AddDeleteCommand()
+        {
+            SqlCommand sqlCommand = new SqlCommand(@"DELETE FROM Department 
+                                                        WHERE ID = @ID", connection);
+            SqlParameter param = sqlCommand.Parameters.Add("@ID", SqlDbType.Int, 0, "DepartmentID");
+            param.SourceVersion = DataRowVersion.Original;
+            adapter.DeleteCommand = sqlCommand;
+        }
         /// <summary>
         /// Конструктор по умолчанию
         /// </summary>
         public MainWindow()
         {
             InitializeComponent();
-
-            var connectionString = ConfigurationManager.ConnectionStrings["DefaultConnection"].ConnectionString;
-            using (SqlConnection connection = new SqlConnection(connectionString))
-            {
-                SqlDataAdapter adapter = new SqlDataAdapter();
-                SqlCommand sqlCommand = new SqlCommand("SELECT Department.Name FROM Company INNER JOIN Department ON Company.Id=Department.CompanyID WHERE Company.Id=@ID", connection);
-                SqlParameter sqlParam = new SqlParameter("@ID", SqlDbType.Int, 0, "ID");
-                sqlParam.SourceVersion = DataRowVersion.Original;
-                sqlParam.Value = 1;
-                sqlCommand.Parameters.Add(sqlParam);
-                adapter.SelectCommand = sqlCommand;
-                DataTable dt = new DataTable();
+            Loaded += (s, e) => {
+                var connectionString = ConfigurationManager.ConnectionStrings["DefaultConnection"].ConnectionString;
+                connection = new SqlConnection(connectionString);
+                adapter = new SqlDataAdapter();
+                AddSelectCommand();
+                AddInsertCommand();
+                AddUpdateCommand();
+                AddDeleteCommand();
+                dt = new DataTable();
                 adapter.Fill(dt);
                 DeportmentDataGrid.DataContext = dt.DefaultView;
-            }
+                TextBoxCompany.Text = dt.DefaultView[0]["CompanyName"].ToString();
+            };
+            Closing += (s, e) => {
 
-            p = new CompanyPresenter(this);
-            Loaded += (s, e) => { p.LoadData(); };
-            Closing += (s, e) => { p.SaveData(); };
-            btnAddDepartment.Click += (s, e) => { p.Show(); };
-            btnEditDepartment.Click += (s, e) => { p.Edit(); };
-            btnRemoveDepartment.Click += (s, e) => { p.Remove(); };
+            };
+            btnAddDepartment.Click += (s, e) => {
+                DataRow newRow = dt.NewRow();
+                EditDeportmant editWindow = new EditDeportmant(connection, newRow);
+                editWindow.ShowDialog();
+                if (editWindow.DialogResult.HasValue && editWindow.DialogResult.Value)
+                {
+                    newRow["CompanyName"] = dt.DefaultView[0]["CompanyName"].ToString();
+                    newRow["CompanyID"] = dt.DefaultView[0]["CompanyID"].ToString();
+                    dt.Rows.Add(editWindow.resultRow);
+                    adapter.Update(dt);
+                }
+            };
+            btnEditDepartment.Click += (s, e) => {
+                if (DeportmentDataGrid.SelectedItem != null)
+                {
+                    DataRowView newRow = (DataRowView)DeportmentDataGrid.SelectedItem;
+                    newRow.BeginEdit();
+                    EditDeportmant editWindow = new EditDeportmant(connection, newRow.Row);
+                    editWindow.ShowDialog();
+                    if (editWindow.DialogResult.HasValue && editWindow.DialogResult.Value)
+                    {
+                        newRow.EndEdit();
+                        adapter.Update(dt);
+                    }
+                    else
+                    {
+                        newRow.CancelEdit();
+                    }
+                }
+            };
+            btnRemoveDepartment.Click += (s, e) => {
+                if (DeportmentDataGrid.SelectedItem != null)
+                {
+                    DataRowView newRow = (DataRowView)DeportmentDataGrid.SelectedItem;
+                    newRow.Row.Delete();
+                    adapter.Update(dt);
+                }
+            };
         }
     }
 }

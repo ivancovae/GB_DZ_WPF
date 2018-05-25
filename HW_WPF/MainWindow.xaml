@@ -21,9 +21,8 @@
             <ColumnDefinition></ColumnDefinition>
         </Grid.ColumnDefinitions>
         <Label x:Name="labelTitleCompany" Grid.Column="0" Grid.Row="0" Content="Компания" Margin="5" HorizontalContentAlignment="Center"/>
-        <TextBox x:Name="TextBoxCompany" Grid.Column="1" Grid.Row="0" Margin="5"/>
+        <TextBox x:Name="TextBoxCompany" Grid.Column="1" Grid.Row="0" Margin="5" IsEnabled="False"/>
         <Label x:Name="labelTitleDeportments" Grid.Column="0" Grid.Row="1" Content="Депортаменты" Margin="5" HorizontalContentAlignment="Center"/>
-        <ListBox x:Name="listBoxDepartments"  Grid.Column="0" Grid.Row="2" Margin="5" SelectionMode="Single"/>
 
         <DataGrid x:Name="DeportmentDataGrid" 
                   Grid.Row="2" 
@@ -35,10 +34,10 @@
                   IsReadOnly="True">
             <DataGrid.Columns>
                 <DataGridTextColumn x:Name="nameColumn" 
-                                    Binding="{Binding Name}"
+                                    Binding="{Binding DepartmentName}"
                                     Header="Департаменты" 
                                     IsReadOnly="True" 
-                                    Width="Auto"/>
+                                    Width="*"/>
             </DataGrid.Columns>
         </DataGrid>
 
