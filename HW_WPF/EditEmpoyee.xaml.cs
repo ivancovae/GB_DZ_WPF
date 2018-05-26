@@ -35,7 +35,15 @@ namespace HW_WPF
         //
         // EmployeID, EmployeeName, EmployeeAge, EmployeeSalary, CompanyID, DepartmentID, DepartmentName 
         //
+        /// <summary>
+        /// Свойство результата строки
+        /// </summary>
         public DataRow resultRow { get; set; }
+        /// <summary>
+        /// Конструктор с параметрами
+        /// </summary>
+        /// <param name="sqlConnection">конекшен к базе</param>
+        /// <param name="dataRow">строка в таблице</param>
         public EditEmpoyee(SqlConnection sqlConnection, DataRow dataRow)
         {
             InitializeComponent();

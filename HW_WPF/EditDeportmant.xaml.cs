@@ -24,6 +24,9 @@ namespace HW_WPF
         // 
         // Заголовок (DepartmentName, CompanyName, DepartmentID)
         // 
+        /// <summary>
+        /// Свойство результата строки
+        /// </summary>
         public DataRow resultRow { get; set; }
 
         private SqlConnection connection;
@@ -75,7 +78,11 @@ namespace HW_WPF
             param.SourceVersion = DataRowVersion.Original;
             adapter.DeleteCommand = sqlCommand;
         }
-
+        /// <summary>
+        /// Конструктор с параметрами
+        /// </summary>
+        /// <param name="sqlConnection">конекшен к базе</param>
+        /// <param name="dataRow">строка в таблице</param>
         public EditDeportmant(SqlConnection sqlConnection, DataRow dataRow)
         {
             InitializeComponent();
