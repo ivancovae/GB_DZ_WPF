@@ -71,6 +71,7 @@ namespace HW_WPF
                 resultRow["EmployeeAge"] = textBoxEmployeeAge.Text;
                 resultRow["EmployeeSalary"] = textBoxEmployeeSalary.Text;
                 resultRow["DepartmentID"] = (comboBoxEmployeeDepartment.SelectedItem as DataRowView).Row["DepartmentID"];
+                resultRow["DepartmentName"] = (comboBoxEmployeeDepartment.SelectedItem as DataRowView).Row["DepartmentName"];
                 DialogResult = true;
             };
             CancelEmployee.Click += (s, e) =>

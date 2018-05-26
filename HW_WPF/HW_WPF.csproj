@@ -70,9 +70,7 @@
       <DependentUpon>App.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="Model\Company.cs" />
     <Compile Include="Model\CompanyTable.cs" />
-    <Compile Include="Model\Department.cs" />
     <Compile Include="EditDeportmant.xaml.cs">
       <DependentUpon>EditDeportmant.xaml</DependentUpon>
     </Compile>
@@ -80,19 +78,7 @@
       <DependentUpon>EditEmpoyee.xaml</DependentUpon>
     </Compile>
     <Compile Include="Model\DepartmentTable.cs" />
-    <Compile Include="Model\Employee.cs" />
-    <Compile Include="Model\EmployeeModel.cs" />
     <Compile Include="Model\EmployeeTable.cs" />
-    <Compile Include="Model\IModel.cs" />
-    <Compile Include="Model\CompanyModel.cs" />
-    <Compile Include="Model\DepartmentModel.cs" />
-    <Compile Include="Presenter\DepartmentPresenter.cs" />
-    <Compile Include="Presenter\EmployeePresenter.cs" />
-    <Compile Include="Presenter\IPresenter.cs" />
-    <Compile Include="Presenter\CompanyPresenter.cs" />
-    <Compile Include="ViewModel\ICompanyView.cs" />
-    <Compile Include="ViewModel\IDepartmentView.cs" />
-    <Compile Include="ViewModel\IEmployeeView.cs" />
     <Compile Include="MainWindow.xaml.cs">
       <DependentUpon>MainWindow.xaml</DependentUpon>
       <SubType>Code</SubType>

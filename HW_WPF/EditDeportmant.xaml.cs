@@ -104,14 +104,18 @@ namespace HW_WPF
             };
             btnAddEmployee.Click += (s, e) => {
                 DataRow newRow = dt.NewRow();
+                newRow["DepartmentName"] = TextBoxDepartment.Text;
                 EditEmpoyee editWindow = new EditEmpoyee(connection, newRow);
                 editWindow.ShowDialog();
                 if (editWindow.DialogResult.HasValue && editWindow.DialogResult.Value)
                 {
                     newRow["CompanyID"] = resultRow["CompanyID"].ToString();
-                    newRow["DepartmentName"] = TextBoxDepartment.Text;
                     dt.Rows.Add(editWindow.resultRow);
                     adapter.Update(dt);
+                    if (newRow["DepartmentID"].ToString() != resultRow["DepartmentID"].ToString())
+                    {
+                        dt.Rows.Remove(editWindow.resultRow);
+                    }
                 }
             };
             btnEditEmployee.Click += (s, e) => {
@@ -126,6 +130,10 @@ namespace HW_WPF
                     {
                         newRow.EndEdit();
                         adapter.Update(dt);
+                        if (newRow["DepartmentID"].ToString() != resultRow["DepartmentID"].ToString())
+                        {
+                            dt.Rows.Remove(newRow.Row);
+                        }
                     }
                     else
                     {
