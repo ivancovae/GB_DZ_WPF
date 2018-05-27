@@ -15,6 +15,9 @@ using System.Windows.Shapes;
 using System.Configuration;
 using System.Data;
 using System.Data.SqlClient;
+using System.Net;
+using System.Net.Http;
+using System.IO;
 
 namespace HW_WPF
 {
@@ -75,7 +78,13 @@ namespace HW_WPF
         {
             InitializeComponent();
             Loaded += (s, e) => {
-                var connectionString = ConfigurationManager.ConnectionStrings["DefaultConnection"].ConnectionString;
+                WebClient webClient = new WebClient() { Encoding = Encoding.UTF8 };
+                string url = $@"http://localhost:50523/getEmployeeList";
+                HttpClient httpClient = new HttpClient();
+                var result = httpClient.GetStringAsync(url).Result;
+                Console.WriteLine(result);
+
+                /*var connectionString = ConfigurationManager.ConnectionStrings["DefaultConnection"].ConnectionString;
                 connection = new SqlConnection(connectionString);
                 adapter = new SqlDataAdapter();
                 AddSelectCommand();
@@ -85,7 +94,7 @@ namespace HW_WPF
                 dt = new DataTable();
                 adapter.Fill(dt);
                 DeportmentDataGrid.DataContext = dt.DefaultView;
-                TextBoxCompany.Text = dt.DefaultView[0]["CompanyName"].ToString();
+                TextBoxCompany.Text = dt.DefaultView[0]["CompanyName"].ToString();*/
             };
             Closing += (s, e) => {
 
