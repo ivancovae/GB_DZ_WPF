@@ -13,12 +13,16 @@ namespace HW_WPF
     public partial class EditDeportmant : Window
     {
         private string host = $"http://localhost:50523/";
+        /// <summary>
+        /// конструктор с передачей уникального номера выбранного из списка
+        /// </summary>
+        /// <param name="Id">уникальный номер из списка</param>
         public EditDeportmant(int Id)
         {
             InitializeComponent();
                         
             Loaded += (s, e) => {
-                string url = host + $@"getDepartmentListId/{Id}";
+                string url = host + $@"getDepartmentId/{Id}";
                 HttpClient httpClient = new HttpClient();
                 DataContractJsonSerializer jsonCompanyFormatter = new DataContractJsonSerializer(typeof(DepartmentTable));
                 DepartmentTable ct = (DepartmentTable)jsonCompanyFormatter.ReadObject(new MemoryStream(Encoding.UTF8.GetBytes(httpClient.GetStringAsync(url).Result)));

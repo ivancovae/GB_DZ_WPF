@@ -13,14 +13,17 @@ namespace HW_WPF
     public partial class EditEmpoyee : Window
     {
         private string host = $"http://localhost:50523/";
-
+        /// <summary>
+        /// конструктор с передачей уникального номера выбранного из списка
+        /// </summary>
+        /// <param name="Id">уникальный номер из списка</param>
         public EditEmpoyee(int Id)
         {
             InitializeComponent();
             
             Loaded += (s, e) => {
                 HttpClient httpClient = new HttpClient();
-                string url = host + $@"getEmployeeListId/{Id}";
+                string url = host + $@"getEmployeeId/{Id}";
                 DataContractJsonSerializer jsonEmployeeFormatter = new DataContractJsonSerializer(typeof(EmployeeTable));
                 EmployeeTable et = (EmployeeTable)jsonEmployeeFormatter.ReadObject(new MemoryStream(Encoding.UTF8.GetBytes(httpClient.GetStringAsync(url).Result)));
                 

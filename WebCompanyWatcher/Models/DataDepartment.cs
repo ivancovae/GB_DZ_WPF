@@ -7,16 +7,25 @@ using System.Data.SqlClient;
 
 namespace WebCompanyWatcher.Models
 {
+    /// <summary>
+    /// Объект работы с источником данных для департаментов
+    /// </summary>
     public class DataDepartment
     {
         private SqlConnection connection;
+        /// <summary>
+        /// конструктор по умолчанию
+        /// </summary>
         public DataDepartment()
         {
             var connectionString = ConfigurationManager.ConnectionStrings["DefaultConnection"].ConnectionString;
             connection = new SqlConnection(connectionString);
             connection.Open();
         }
-
+        /// <summary>
+        /// получение списка департаментов
+        /// </summary>
+        /// <returns>список департаментов</returns>
         public List<Department> getListDepartments()
         {
             List<Department> list = new List<Department>();
@@ -39,6 +48,11 @@ namespace WebCompanyWatcher.Models
             }
             return list;
         }
+        /// <summary>
+        /// получение списка департаментов компании
+        /// </summary>
+        /// <param name="Id">уникальный номер компании</param>
+        /// <returns>список департаментов</returns>
         public List<Department> getListDepartmentsForCompany(int Id)
         {
             List<Department> list = new List<Department>();
@@ -62,7 +76,11 @@ namespace WebCompanyWatcher.Models
             }
             return list;
         }
-
+        /// <summary>
+        /// получение департамента по уникальному номеру
+        /// </summary>
+        /// <param name="Id">уникальный номер департамента</param>
+        /// <returns>объект департамента</returns>
         public Department getDepartmentId(int Id)
         {
             Department department = new Department();

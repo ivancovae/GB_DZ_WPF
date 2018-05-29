@@ -21,8 +21,8 @@ namespace HW_WPF
         {
             InitializeComponent();
             Loaded += (s, e) => {
-                string url = host + $@"getCompanyList";
                 HttpClient httpClient = new HttpClient();
+                string url = host + $@"getCompanyList";
                 DataContractJsonSerializer jsonCompanyFormatter = new DataContractJsonSerializer(typeof(CompanyTable[]));
                 CompanyTable[] ct = (CompanyTable[])jsonCompanyFormatter.ReadObject(new MemoryStream(Encoding.UTF8.GetBytes(httpClient.GetStringAsync(url).Result)));
                 CompanyTable first = ct.First();

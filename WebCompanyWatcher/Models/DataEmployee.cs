@@ -7,16 +7,25 @@ using System.Data.SqlClient;
 
 namespace WebCompanyWatcher.Models
 {
+    /// <summary>
+    /// Объект работы с источником данных для сотрудников
+    /// </summary>
     public class DataEmployee
     {
         private SqlConnection connection;
+        /// <summary>
+        /// конструктор по умолчанию
+        /// </summary>
         public DataEmployee()
         {
             var connectionString = ConfigurationManager.ConnectionStrings["DefaultConnection"].ConnectionString;
             connection = new SqlConnection(connectionString);
             connection.Open();
         }
-
+        /// <summary>
+        /// получение списка сотрудников
+        /// </summary>
+        /// <returns>список сотрудников</returns>
         public List<Employee> getListEmployees()
         {
             List<Employee> list = new List<Employee>();
@@ -48,6 +57,11 @@ namespace WebCompanyWatcher.Models
             }
             return list;
         }
+        /// <summary>
+        /// получение списка сотрудников департамента
+        /// </summary>
+        /// <param name="Id">уникальный номер департамента</param>
+        /// <returns>список сотрудников</returns>
         public List<Employee> getListEmployeisForDepartment(int Id)
         {
             List<Employee> list = new List<Employee>();
@@ -73,7 +87,11 @@ namespace WebCompanyWatcher.Models
             }
             return list;
         }
-
+        /// <summary>
+        /// получение сотрудника
+        /// </summary>
+        /// <param name="Id">уникальный номер сотрудника</param>
+        /// <returns>объект сотрудника</returns>
         public Employee getEmployeeId(int Id)
         {
             Employee employee = new Employee();

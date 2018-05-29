@@ -8,16 +8,25 @@ using System.Data.SqlClient;
 
 namespace WebCompanyWatcher.Models
 {
+    /// <summary>
+    /// Объект работы с источником данных для компаний
+    /// </summary>
     public class DataCompany
     {
         private SqlConnection connection;
+        /// <summary>
+        /// конструктор по умолчанию
+        /// </summary>
         public DataCompany()
         {
             var connectionString = ConfigurationManager.ConnectionStrings["DefaultConnection"].ConnectionString;
             connection = new SqlConnection(connectionString);
             connection.Open();
         }
-
+        /// <summary>
+        /// получение списка компаний
+        /// </summary>
+        /// <returns>список компаний</returns>
         public List<Company> getListCompanies()
         {
             List<Company> list = new List<Company>();
@@ -40,7 +49,11 @@ namespace WebCompanyWatcher.Models
             }
             return list;
         }
-
+        /// <summary>
+        /// получения компании по уникальному номеру
+        /// </summary>
+        /// <param name="Id">уникальный номер компании</param>
+        /// <returns>объект компании</returns>
         public Company getCompanyId(int Id)
         {
             Company company = new Company();
