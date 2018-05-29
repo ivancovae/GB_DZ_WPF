@@ -1,11 +1,17 @@
-﻿namespace HW_WPF.Model
+﻿using System.Runtime.Serialization;
+
+namespace HW_WPF.Model
 {
+    [DataContract]
     public class EmployeeTable
     {
-        public string Name;
+        [DataMember]
+        public int ID;
+        [DataMember]
+        public string Name { get; set; }
+        [DataMember]
         public int Age;
+        [DataMember]
         public int Salary;
-        public int DepartmentID;
-        public int CompanyID;
     }
 }

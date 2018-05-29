@@ -22,10 +22,8 @@ namespace WebCompanyWatcher.Models
         {
             List<Company> list = new List<Company>();
 
-            string sql = @"SELECT Department.Name as DepartmentName, Company.Id as CompanyID, Company.Name as CompanyName, Department.Id as DepartmentID
-                                                        FROM Company
-                                                        INNER JOIN Department
-                                                        ON Company.Id = Department.CompanyID";
+            string sql = @"SELECT Company.Name as CompanyName, Company.Id as CompanyId
+                                                        FROM Company";
             using (SqlCommand command = new SqlCommand(sql, connection))
             {
                 using (SqlDataReader reader = command.ExecuteReader())
@@ -34,7 +32,8 @@ namespace WebCompanyWatcher.Models
                     {
                         list.Add(new Company
                         {
-                            Name = reader["CompanyName"].ToString()
+                            Name = reader["CompanyName"].ToString(),
+                            ID = reader["CompanyId"].ToString()
                         });
                     }
                 }
@@ -46,10 +45,8 @@ namespace WebCompanyWatcher.Models
         {
             Company company = new Company();
 
-            string sql = $@"SELECT Department.Name as DepartmentName, Company.Id as CompanyID, Company.Name as CompanyName, Department.Id as DepartmentID
+            string sql = $@"SELECT Company.Name as CompanyName, Company.Id as CompanyId
                                                         FROM Company
-                                                        INNER JOIN Department
-                                                        ON Company.Id = Department.CompanyID
                                                         WHERE Company.Id={Id}";
             using (SqlCommand command = new SqlCommand(sql, connection))
             {
@@ -59,30 +56,13 @@ namespace WebCompanyWatcher.Models
                     {
                         company = new Company
                         {
-                            Name = reader["CompanyName"].ToString()
+                            Name = reader["CompanyName"].ToString(),
+                            ID = reader["CompanyId"].ToString()
                         };
                     }
                 }
             }
             return company;
-        }
-
-        public bool AddCompany(Company company)
-        {
-            try
-            {
-                string sql = $@"INSERT INTO Company (Name) 
-                                VALUES (N'{company.Name})";
-                using (SqlCommand command = new SqlCommand(sql, connection))
-                {
-                    command.ExecuteNonQuery();
-                }
-            }
-            catch
-            {
-                return false;
-            }
-            return true;
         }
     }
 }

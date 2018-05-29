@@ -34,17 +34,15 @@
                   IsReadOnly="True">
             <DataGrid.Columns>
                 <DataGridTextColumn x:Name="nameColumn" 
-                                    Binding="{Binding DepartmentName}"
+                                    Binding="{Binding Name}"
                                     Header="Департаменты" 
-                                    IsReadOnly="True" 
+                                    IsReadOnly="True"
                                     Width="*"/>
             </DataGrid.Columns>
         </DataGrid>
 
         <StackPanel Grid.Column="1" Grid.Row="2" Orientation="Vertical">
-            <Button x:Name="btnAddDepartment" Content="Добавить" VerticalAlignment="Center" HorizontalAlignment="Stretch" Margin="5" Height="40"/>
-            <Button x:Name="btnRemoveDepartment" Content="Удалить" VerticalAlignment="Center" HorizontalAlignment="Stretch" Margin="5" Height="40"/>
-            <Button x:Name="btnEditDepartment" Content="Редактировать" VerticalAlignment="Center" HorizontalAlignment="Stretch" Margin="5" Height="40"/>
+            <Button x:Name="btnShowDepartment" Content="Посмотреть" VerticalAlignment="Center" HorizontalAlignment="Stretch" Margin="5" Height="40"/>
         </StackPanel>
     </Grid>
 </Window>

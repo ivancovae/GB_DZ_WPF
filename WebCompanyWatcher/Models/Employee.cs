@@ -7,10 +7,9 @@ namespace WebCompanyWatcher.Models
 {
     public class Employee
     {
+        public string ID { get; set; }
         public string Name { get; set; }
         public int Age { get; set; }
         public int Salary { get; set; }
-        public int DepartmentID { get; set; }
-        public int CompanyID { get; set; }
     }
 }

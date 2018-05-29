@@ -17,17 +17,15 @@ namespace WebCompanyWatcher.Controllers
         {
             return data.getListEmployees();
         }
-        [Route("getEmployeeListId")]
+        [Route("getEmployeeListForDepartment/{Id}")]
+        public List<Employee> GetEmployees(int Id)
+        {
+            return data.getListEmployeisForDepartment(Id);
+        }
+        [Route("getEmployeeListId/{Id}")]
         public Employee Get(int Id)
         {
             return data.getEmployeeId(Id);
-        }
-        [Route("addEmployee")]
-        public HttpResponseMessage Post([FromBody]Employee value)
-        {
-            if (data.AddEmployee(value))
-                return Request.CreateResponse(HttpStatusCode.Created);
-            else return Request.CreateResponse(HttpStatusCode.BadRequest);
         }
     }
 }

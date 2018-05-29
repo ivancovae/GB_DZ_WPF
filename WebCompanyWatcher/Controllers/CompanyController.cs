@@ -17,17 +17,10 @@ namespace WebCompanyWatcher.Controllers
         {
             return data.getListCompanies();
         }
-        [Route("getCompanyListId")]
+        [Route("getCompanyListId/{Id}")]
         public Company Get(int Id)
         {
             return data.getCompanyId(Id);
-        }
-        [Route("addCompany")]
-        public HttpResponseMessage Post([FromBody]Company value)
-        {
-            if (data.AddCompany(value))
-                return Request.CreateResponse(HttpStatusCode.Created);
-            else return Request.CreateResponse(HttpStatusCode.BadRequest);
         }
     }
 }

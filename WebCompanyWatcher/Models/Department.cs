@@ -7,7 +7,7 @@ namespace WebCompanyWatcher.Models
 {
     public class Department
     {
-        public string CompanyOwner { get; set; }
+        public string ID { get; set; }
         public string Name { get; set; }
     }
 }

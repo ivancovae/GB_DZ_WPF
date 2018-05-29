@@ -17,17 +17,15 @@ namespace WebCompanyWatcher.Controllers
         {
             return data.getListDepartments();
         }
-        [Route("getDepartmentListId")]
+        [Route("getDepartmentsListForCompany/{Id}")]
+        public List<Department> GetDepartments(int Id)
+        {
+            return data.getListDepartmentsForCompany(Id);
+        }
+        [Route("getDepartmentListId/{Id}")]
         public Department Get(int Id)
         {
             return data.getDepartmentId(Id);
-        }
-        [Route("addDepartment")]
-        public HttpResponseMessage Post([FromBody]Department value)
-        {
-            if (data.AddDepartment(value))
-                return Request.CreateResponse(HttpStatusCode.Created);
-            else return Request.CreateResponse(HttpStatusCode.BadRequest);
         }
     }
 }

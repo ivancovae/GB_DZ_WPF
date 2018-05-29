@@ -21,7 +21,7 @@ namespace WebCompanyWatcher.Models
         {
             List<Employee> list = new List<Employee>();
 
-            string sql = $@"SELECT Employee.Name as EmployeeName, Employee.Age as EmployeeAge, Employee.Salary as EmployeeSalary
+            string sql = $@"SELECT Employee.Name as EmployeeName, Employee.Age as EmployeeAge, Employee.Salary as EmployeeSalary, Employee.Id as EmployeeID
                                                         FROM Employee";
             using (SqlCommand command = new SqlCommand(sql, connection))
             {
@@ -35,7 +35,8 @@ namespace WebCompanyWatcher.Models
                             {
                                 Name = reader["EmployeeName"].ToString(),
                                 Age = Convert.ToInt32(reader["EmployeeAge"]),
-                                Salary = Convert.ToInt32(reader["EmployeeSalary"])
+                                Salary = Convert.ToInt32(reader["EmployeeSalary"]),
+                                ID = reader["EmployeeID"].ToString()
                             });
                         }
                         catch (System.InvalidCastException ex)
@@ -47,12 +48,37 @@ namespace WebCompanyWatcher.Models
             }
             return list;
         }
+        public List<Employee> getListEmployeisForDepartment(int Id)
+        {
+            List<Employee> list = new List<Employee>();
+
+            string sql = $@"SELECT Employee.Name as EmployeeName, Employee.Age as EmployeeAge, Employee.Salary as EmployeeSalary, Employee.Id as EmployeeID
+                                                        FROM Employee
+                                                        WHERE Employee.DepartmentId={Id}";
+            using (SqlCommand command = new SqlCommand(sql, connection))
+            {
+                using (SqlDataReader reader = command.ExecuteReader())
+                {
+                    while (reader.Read())
+                    {
+                        list.Add(new Employee
+                        {
+                            Name = reader["EmployeeName"].ToString(),
+                            Age = Convert.ToInt32(reader["EmployeeAge"]),
+                            Salary = Convert.ToInt32(reader["EmployeeSalary"]),
+                            ID = reader["EmployeeID"].ToString()
+                        });
+                    }
+                }
+            }
+            return list;
+        }
 
         public Employee getEmployeeId(int Id)
         {
             Employee employee = new Employee();
 
-            string sql = $@"SELECT Employee.Name as EmployeeName, Employee.Age as EmployeeAge, Employee.Salary as EmployeeSalary
+            string sql = $@"SELECT Employee.Name as EmployeeName, Employee.Age as EmployeeAge, Employee.Salary as EmployeeSalary, Employee.Id as EmployeeID
                                                         FROM Employee
                                                         WHERE Employee.Id={Id}";
             using (SqlCommand command = new SqlCommand(sql, connection))
@@ -65,30 +91,13 @@ namespace WebCompanyWatcher.Models
                         {
                             Name = reader["EmployeeName"].ToString(),
                             Age = Convert.ToInt32(reader["EmployeeAge"]),
-                            Salary = Convert.ToInt32(reader["EmployeeSalary"])
+                            Salary = Convert.ToInt32(reader["EmployeeSalary"]),
+                            ID = reader["EmployeeID"].ToString()
                         };
                     }
                 }
             }
             return employee;
-        }
-
-        public bool AddEmployee(Employee employee)
-        {
-            try
-            {
-                string sql = $@"INSERT INTO Employee (Name, Age, Salary) 
-                                VALUES (N'{employee.Name}, N'{employee.Age}, N'{employee.Salary})";
-                using (SqlCommand command = new SqlCommand(sql, connection))
-                {
-                    command.ExecuteNonQuery();
-                }
-            }
-            catch
-            {
-                return false;
-            }
-            return true;
         }
     }
 }

@@ -31,7 +31,7 @@
                   IsReadOnly="True">
             <DataGrid.Columns>
                 <DataGridTextColumn x:Name="nameColumn" 
-                                    Binding="{Binding EmployeeName}"
+                                    Binding="{Binding Name}"
                                     Header="Сотрудники" 
                                     IsReadOnly="True" 
                                     Width="*"/>
@@ -39,10 +39,7 @@
         </DataGrid>
 
         <StackPanel Grid.Column="1" Grid.Row="2" Orientation="Vertical">
-            <Button x:Name="btnSaveEmployee" Content="Сохранить" VerticalAlignment="Center" HorizontalAlignment="Stretch" Margin="5" Height="40"/>
-            <Button x:Name="btnAddEmployee" Content="Добавить" VerticalAlignment="Center" HorizontalAlignment="Stretch" Margin="5" Height="40"/>
-            <Button x:Name="btnRemoveEmployee" Content="Удалить" VerticalAlignment="Center" HorizontalAlignment="Stretch" Margin="5" Height="40"/>
-            <Button x:Name="btnEditEmployee" Content="Редактировать" VerticalAlignment="Center" HorizontalAlignment="Stretch" Margin="5" Height="40"/>
+            <Button x:Name="btnShowEmployee" Content="Посмотреть" VerticalAlignment="Center" HorizontalAlignment="Stretch" Margin="5" Height="40"/>
         </StackPanel>
     </Grid>
 </Window>

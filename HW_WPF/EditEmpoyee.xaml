@@ -6,12 +6,11 @@
         xmlns:local="clr-namespace:HW_WPF"
         mc:Ignorable="d"
         Title="EditEmpoyee" 
-        Height="300" Width="360"
-        MinHeight="250" MinWidth="430"
-        MaxHeight="430" MaxWidth="430">
+        Height="200" Width="360"
+        MinHeight="200" MinWidth="430"
+        MaxHeight="200" MaxWidth="430">
     <Grid>
         <Grid.RowDefinitions>
-            <RowDefinition Height="40"/>
             <RowDefinition Height="40"/>
             <RowDefinition Height="40"/>
             <RowDefinition Height="40"/>
@@ -29,15 +28,5 @@
         <TextBox x:Name="textBoxEmployeeAge" Grid.Row="2" Grid.Column="1" Margin="5" HorizontalContentAlignment="Center"/>
         <Label x:Name="labelEmployeeSalary" Grid.Row="3" Grid.Column="0" Content="Оклад" Margin="5" HorizontalContentAlignment="Center"/>
         <TextBox x:Name="textBoxEmployeeSalary" Grid.Row="3" Grid.Column="1" Margin="5" HorizontalContentAlignment="Center"/>
-        <Label x:Name="labelEmployeeDepartment" Grid.Row="4" Grid.Column="0" Content="Департамент" Margin="5" HorizontalContentAlignment="Center"/>
-        <ComboBox x:Name="comboBoxEmployeeDepartment" Grid.Row="4" Grid.Column="1" Margin="5" HorizontalContentAlignment="Center" DataContext="{Binding}">
-            <ComboBox.ItemTemplate>
-                <DataTemplate>
-                    <TextBlock Text="{Binding DepartmentName}"/>
-                </DataTemplate>
-            </ComboBox.ItemTemplate>
-        </ComboBox>
-        <Button x:Name="SaveEmployee" Grid.Row="5" Grid.Column="0" Margin="5" HorizontalContentAlignment="Center" Content="Сохранить"/>
-        <Button x:Name="CancelEmployee" Grid.Row="5" Grid.Column="1" Margin="5" HorizontalContentAlignment="Center" Content="Отменить"/>
     </Grid>
 </Window>

@@ -21,7 +21,7 @@ namespace WebCompanyWatcher.Models
         {
             List<Department> list = new List<Department>();
 
-            string sql = $@"SELECT Department.Name as DepartmentName
+            string sql = $@"SELECT Department.Name as DepartmentName, Department.Id as DepartmentId
                                                         FROM Department";
             using (SqlCommand command = new SqlCommand(sql, connection))
             {
@@ -31,7 +31,31 @@ namespace WebCompanyWatcher.Models
                     {
                         list.Add(new Department
                         {
-                            Name = reader["DepartmentName"].ToString()
+                            Name = reader["DepartmentName"].ToString(),
+                            ID = reader["DepartmentId"].ToString()
+                        });
+                    }
+                }
+            }
+            return list;
+        }
+        public List<Department> getListDepartmentsForCompany(int Id)
+        {
+            List<Department> list = new List<Department>();
+
+            string sql = $@"SELECT Department.Name as DepartmentName, Department.Id as DepartmentId
+                                                        FROM Department
+                                                        WHERE Department.CompanyID={Id}";
+            using (SqlCommand command = new SqlCommand(sql, connection))
+            {
+                using (SqlDataReader reader = command.ExecuteReader())
+                {
+                    while (reader.Read())
+                    {
+                        list.Add(new Department
+                        {
+                            Name = reader["DepartmentName"].ToString(),
+                            ID = reader["DepartmentId"].ToString()
                         });
                     }
                 }
@@ -43,7 +67,7 @@ namespace WebCompanyWatcher.Models
         {
             Department department = new Department();
 
-            string sql = $@"SELECT Department.Name as DepartmentName
+            string sql = $@"SELECT Department.Name as DepartmentName, Department.Id as DepartmentId
                                                         FROM Department
                                                         WHERE Department.Id={Id}";
             using (SqlCommand command = new SqlCommand(sql, connection))
@@ -54,30 +78,13 @@ namespace WebCompanyWatcher.Models
                     {
                         department = new Department
                         {
-                            Name = reader["DepartmentName"].ToString()
+                            Name = reader["DepartmentName"].ToString(),
+                            ID = reader["DepartmentId"].ToString()
                         };
                     }
                 }
             }
             return department;
-        }
-
-        public bool AddDepartment(Department department)
-        {
-            try
-            {
-                string sql = $@"INSERT INTO Department (Name) 
-                                VALUES (N'{department.Name})";
-                using (SqlCommand command = new SqlCommand(sql, connection))
-                {
-                    command.ExecuteNonQuery();
-                }
-            }
-            catch
-            {
-                return false;
-            }
-            return true;
         }
     }
 }
